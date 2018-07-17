@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Using the XMLHttpRequest Object</h2>
+
+<div id="content">
+    <input type="number" id="page"><br> 
+    <button type="button" onclick="loadXMLDoc()">Change Content</button>
+    <button type="button" onclick="copy()">Copy</button>
+    <form id="demo"></form> 
+</div>
+
+<script>
+var resonse;
+
+function copy(){
+   window.alert("hello");
+    console.log(document.querySelector('.messageCheckbox:checked'));
+} 
+
+function loadXMLDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // document.getElementById("demo").innerHTML = this.responseText;
+      response= JSON.parse(this.responseText);
+      console.log(response.pageno);
+      document.getElementById("demo").innerHTML += "<p/>";
+      document.getElementById("demo").innerHTML += "Page No = " + response.pageno;
+      document.getElementById("demo").innerHTML += "<br/>";
+
+      response.page.map((line,index)=>{
+      var para = document.createElement("p");
+      var checkbox = document.createElement('input');
+        checkbox.type = "checkbox";
+        checkbox.name = "name";
+        checkbox.value = index;
+        checkbox.id = "check"+index;
+
+      var node = document.createTextNode(line.line.transliteration.devanagari.text );
+      var node2 = document.createTextNode(line.line.translation.english.default );
+      para.append(checkbox);
+      para.appendChild(node);
+      para.appendChild(node2);
+
+
+      document.getElementById("demo").appendChild(para);
+    });
+    }
+  };
+  xhttp.open("GET", "https://api.gurbaninow.com/v2/ang/"+document.getElementById("page").value, true);
+  xhttp.send();
+}
+</script>
+
+</body>
+</html>
