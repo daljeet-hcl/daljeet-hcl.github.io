@@ -1,22 +1,40 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
+
+    </head>
+         
 <body>
 
 <h2>Using the XMLHttpRequest Object</h2>
-
+<div id="title"> </div>
 <div id="content">
     <input type="number" id="page"><br> 
     <button type="button" onclick="loadXMLDoc()">Change Content</button>
     <button type="button" onclick="copy()">Copy</button>
+    
     <form id="demo"></form> 
 </div>
 
 <script>
 var resonse;
 
+var body = $('body');
+var btn = '<button class="btn" id="snipButton" data-clipboard-target="#title">Copy to clipboard</button>';
+body.append(btn);
+var clipboard = new Clipboard('#snipButton');
+
 function copy(){
-   window.alert("hello");
-    console.log(document.querySelector('.messageCheckbox:checked'));
+   
+   $('input:checkbox').filter(':checked').map(function(){
+    var lineNo=$(this).val();
+    console.log(response.page[lineNo].line.transliteration.devanagari.text); 
+    console.log(response.page[lineNo].line.translation.english.default);   
+    document.getElementById("title").innerHTML += response.page[lineNo].line.transliteration.devanagari.text;
+  }); 
+
 } 
 
 function loadXMLDoc() {
