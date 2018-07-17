@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
+
+    </head>
+         
+<body>
+
+<h2>Guru Granth Sahib text copy utility</h2>
+<div id="title"> </div>
+<div id="content">
+    <input type="number" id="page"><br> 
+    <button type="button" onclick="loadXMLDoc()">Load Page</button>
+    <button type="button" onclick="copy()">Preview</button>
+    
+    <form id="demo"></form> 
+</div>
+
+<script>
+var resonse;
+
+var body = $('body');
+var btn = '<button class="btn" id="snipButton" data-clipboard-target="#title">Copy to clipboard</button>';
+var btn2 = '<button class="btn" id="snipButton" data-clipboard-target="#title">Copy to clipboard</button>';
+body.append(btn);
+body.prepend(btn2);
+var clipboard = new Clipboard('#snipButton');
+
+function copy(){
+  document.getElementById("title").innerHTML='';
+   $('input:checkbox').filter(':checked').map(function(){
+    var lineNo=$(this).val();
+    console.log(response.page[lineNo].line.transliteration.devanagari.text); 
+    console.log(response.page[lineNo].line.translation.english.default);   
+    document.getElementById("title").innerHTML += '<br/><b>*'+response.page[lineNo].line.transliteration.devanagari.text+'*<b/><br/>';
+    document.getElementById("title").innerHTML += response.page[lineNo].line.translation.english.default+'<br/>';      
+  }); 
+
+} 
+
+function loadXMLDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // document.getElementById("demo").innerHTML = this.responseText;
+      response= JSON.parse(this.responseText);
+      console.log(response.pageno);
+      document.getElementById("demo").innerHTML = "<p/>";
+      document.getElementById("demo").innerHTML += "Page No = " + response.pageno;
+      document.getElementById("demo").innerHTML += "<br/>";
+
+      response.page.map((line,index)=>{
+      var para = document.createElement("p");
+      var checkbox = document.createElement('input');
+        checkbox.type = "checkbox";
+        checkbox.name = "name";
+        checkbox.value = index;
+        checkbox.id = "check"+index;
+
+      var node = document.createTextNode(line.line.transliteration.devanagari.text );
+      var node2 = document.createTextNode(line.line.translation.english.default );
+      para.append(checkbox);
+      para.appendChild(node);
+      para.appendChild(node2);
+
+
+      document.getElementById("demo").appendChild(para);
+    });
+    }
+  };
+  xhttp.open("GET", "https://api.gurbaninow.com/v2/ang/"+document.getElementById("page").value, true);
+  xhttp.send();
+}
+</script>
+
+</body>
+</html>
