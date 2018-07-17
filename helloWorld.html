@@ -8,12 +8,12 @@
          
 <body>
 
-<h2>Using the XMLHttpRequest Object</h2>
+<h2>Guru Granth Sahib text copy utility</h2>
 <div id="title"> </div>
 <div id="content">
     <input type="number" id="page"><br> 
-    <button type="button" onclick="loadXMLDoc()">Change Content</button>
-    <button type="button" onclick="copy()">Copy</button>
+    <button type="button" onclick="loadXMLDoc()">Load Page</button>
+    <button type="button" onclick="copy()">Preview</button>
     
     <form id="demo"></form> 
 </div>
@@ -23,16 +23,19 @@ var resonse;
 
 var body = $('body');
 var btn = '<button class="btn" id="snipButton" data-clipboard-target="#title">Copy to clipboard</button>';
+var btn2 = '<button class="btn" id="snipButton" data-clipboard-target="#title">Copy to clipboard</button>';
 body.append(btn);
+body.prepend(btn2);
 var clipboard = new Clipboard('#snipButton');
 
 function copy(){
-   
+  document.getElementById("title").innerHTML='';
    $('input:checkbox').filter(':checked').map(function(){
     var lineNo=$(this).val();
     console.log(response.page[lineNo].line.transliteration.devanagari.text); 
     console.log(response.page[lineNo].line.translation.english.default);   
-    document.getElementById("title").innerHTML += response.page[lineNo].line.transliteration.devanagari.text;
+    document.getElementById("title").innerHTML += '<br/><b>*'+response.page[lineNo].line.transliteration.devanagari.text+'*<b/><br/>';
+    document.getElementById("title").innerHTML += response.page[lineNo].line.translation.english.default+'<br/>';      
   }); 
 
 } 
@@ -44,7 +47,7 @@ function loadXMLDoc() {
       // document.getElementById("demo").innerHTML = this.responseText;
       response= JSON.parse(this.responseText);
       console.log(response.pageno);
-      document.getElementById("demo").innerHTML += "<p/>";
+      document.getElementById("demo").innerHTML = "<p/>";
       document.getElementById("demo").innerHTML += "Page No = " + response.pageno;
       document.getElementById("demo").innerHTML += "<br/>";
 
