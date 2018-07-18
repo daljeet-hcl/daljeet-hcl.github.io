@@ -59,7 +59,7 @@
           $("#demo").html( $("#demo").html() + "<br/>");
 
           response.page.map((line, index) => {
-            $("#demo").html( $("#demo").html()+"<br/> <input type='checkbox' value="+index+" />" + line.line.transliteration.devanagari.text);
+            $("#demo").html( $("#demo").html()+"<br/> <input type='checkbox' value="+index+" /><b>" + line.line.transliteration.devanagari.text+'</b>');
             $("#demo").html( $("#demo").html()+ "<br/>"+ line.line.translation.english.default+"<br/>");
           });
         }
