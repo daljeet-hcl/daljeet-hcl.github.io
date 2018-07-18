@@ -20,7 +20,7 @@
     <input type="number" class="form-control" id="page">
     <br>
     <button type="button" class="btn" onclick="loadXMLDoc()">Load Page</button>
-    <button type="button" class="btn" onclick="copy()">Preview</button>
+    <button type="button" class="btn" onclick="copy()">Preview</button>;
 
     <form id="demo"></form>
   </div>
@@ -39,6 +39,7 @@
       document.getElementById("title").innerHTML = '';
       $('input:checkbox').filter(':checked').map(function () {
         var lineNo = $(this).val();
+        console.log("lineNo"+lineNo);
         console.log(response.page[lineNo].line.transliteration.devanagari.text);
         console.log(response.page[lineNo].line.translation.english.default);
         document.getElementById("title").innerHTML += '<br/><b>*' + response.page[lineNo].line.transliteration.devanagari.text + '*<b/><br/>';
@@ -51,29 +52,15 @@
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-          // document.getElementById("demo").innerHTML = this.responseText;
           response = JSON.parse(this.responseText);
           console.log(response.pageno);
-          document.getElementById("demo").innerHTML = "<p/>";
-          document.getElementById("demo").innerHTML += "Page No = " + response.pageno;
-          document.getElementById("demo").innerHTML += "<br/>";
+          $("#demo").html("<p/>");
+          $("#demo").html( $("#demo").html() + "Page No = " + response.pageno);
+          $("#demo").html( $("#demo").html() + "<br/>");
 
           response.page.map((line, index) => {
-            var para = document.createElement("p");
-            var checkbox = document.createElement('input');
-            checkbox.type = "checkbox";
-            checkbox.name = "name";
-            checkbox.value = index;
-            checkbox.id = "check" + index;
-
-            var node = document.createTextNode(line.line.transliteration.devanagari.text);
-            var node2 = document.createTextNode(line.line.translation.english.default);
-            para.append(checkbox);
-            para.appendChild(node);
-            para.appendChild(node2);
-
-
-            document.getElementById("demo").appendChild(para);
+            $("#demo").html( $("#demo").html()+"<br/> <input type='checkbox' value="+index+" />" + line.line.transliteration.devanagari.text);
+            $("#demo").html( $("#demo").html()+ "<br/>"+ line.line.translation.english.default+"<br/>");
           });
         }
       };
