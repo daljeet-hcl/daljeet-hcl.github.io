@@ -3,7 +3,6 @@
 
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -26,7 +25,7 @@
     <input type="number" class="form-control"  id="page">
     <br>
     <button type="button" class="btn" onclick="loadXMLDoc()">Load Page</button>
-    <button type="button" class="btn" onclick="copy()">Preview</button>
+    <button type="button" class="btn" id="copy"> WhatsApp Share </button>
 
     <form id="demo" ></form>
   </div>
@@ -34,24 +33,23 @@
   <script>
     var resonse;
 
-    var body = $('body');
-    var btn = '<button class="btn" id="snipButton" data-clipboard-target="#title">Copy to clipboard</button>';
-    var btn2 = '<button class="btn" id="snipButton" data-clipboard-target="#title">Copy to clipboard</button>';
-    body.append(btn);
-    body.prepend(btn2);
-    var clipboard = new Clipboard('#snipButton');
+    $("#copy").click( function() {
+    var url = "whatsapp://send?text=" + getData();
+    window.open(url);
+    });
 
-    function copy() {
-      document.getElementById("title").innerHTML = '';
+    function getData(){
+      var data = '';
       $('input:checkbox').filter(':checked').map(function () {
         var lineNo = $(this).val();
         console.log("lineNo"+lineNo);
         console.log(response.page[lineNo].line.transliteration.devanagari.text);
         console.log(response.page[lineNo].line.translation.english.default);
-        document.getElementById("title").innerHTML += '<br/><b>*' + response.page[lineNo].line.transliteration.devanagari.text + '*<b/><br/>';
-        document.getElementById("title").innerHTML += response.page[lineNo].line.translation.english.default + '<br/>';
+        
+        data += '*' + response.page[lineNo].line.transliteration.devanagari.text + '*';
+        data += response.page[lineNo].line.translation.english.default;
       });
-
+      return data;
     }
 
     function loadXMLDoc() {
