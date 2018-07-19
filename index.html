@@ -49,7 +49,7 @@
         data += '*' + response.page[lineNo].line.transliteration.devanagari.text + '*';
         data += response.page[lineNo].line.translation.english.default;
       });
-      return data;
+      return encodeURI(data);
     }
 
     function loadXMLDoc() {
