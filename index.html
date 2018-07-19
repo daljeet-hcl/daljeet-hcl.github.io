@@ -46,8 +46,8 @@
         console.log(response.page[lineNo].line.transliteration.devanagari.text);
         console.log(response.page[lineNo].line.translation.english.default);
         
-        data += '*' + response.page[lineNo].line.transliteration.devanagari.text + '*';
-        data += response.page[lineNo].line.translation.english.default;
+        data += '\n\r*' + response.page[lineNo].line.transliteration.devanagari.text + '*\n\r';
+        data += response.page[lineNo].line.translation.english.default+'\n';
       });
       return encodeURI(data);
     }
