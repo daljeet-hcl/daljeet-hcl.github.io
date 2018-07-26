@@ -36,7 +36,16 @@
   <script>
     var resonse;
 
-    function GetURLParameter(sParam) {
+    $( window ).on( "load", function() { 
+          var page=getURLParameter("page");
+          if(page!=null)
+          {
+            $("#page").val(page);
+            loadXMLDoc();
+          }
+     })
+
+    function getURLParameter(sParam) {
       var sPageURL = window.location.search.substring(1);
       var sURLVariables = sPageURL.split('&');
       for (var i = 0; i < sURLVariables.length; i++) {
@@ -82,7 +91,7 @@
           });
         }
       };
-      xhttp.open("GET", "https://api.gurbaninow.com/v2/ang/" + document.getElementById("page").value, true);
+      xhttp.open("GET", "https://api.gurbaninow.com/v2/ang/" +  $("#page").val(), true);
       xhttp.send();
     }
   </script>
