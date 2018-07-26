@@ -47,7 +47,7 @@
 
           response.shabads.map((x, index) => {
             console.log(x);
-            $("#demo").html($("#demo").html() + "<br/> <b> <a href='https://api.gurbaninow.com/v2/shabad/" +x.shabad.shabadid +"'> " + x.shabad.transliteration.devanagari.text + '</a> </b>');
+            $("#demo").html($("#demo").html() + "<br/> <b> <a href='index.html?shabad=" +x.shabad.shabadid +"'> " + x.shabad.transliteration.devanagari.text + '</a> </b>');
             $("#demo").html($("#demo").html() + "<br/><br/>" + x.shabad.source.english + 
             "   <b> <a href='index.html?page="+x.shabad.pageno+"'>" + x.shabad.pageno + '</a><b>   ' + x.shabad.writer.english + "<br/>");
           });

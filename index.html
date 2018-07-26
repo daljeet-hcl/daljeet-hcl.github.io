@@ -34,7 +34,8 @@
   </div>
 
   <script>
-    var resonse;
+    var responseData; //this would be array
+    //var response;
 
     $(window).on("load", function () {
       var page = getURLParameter("page");
@@ -70,12 +71,10 @@
       $('input:checkbox').filter(':checked').map(function () {
         var lineNo = $(this).val();
         console.log("lineNo" + lineNo);
-        console.log(response.page[lineNo].line.transliteration.devanagari.text);
-        console.log(response.page[lineNo].line.translation.english.default);
-        if ($("#page").val() != null) {
-          data += '\n\r*' + response.page[lineNo].line.transliteration.devanagari.text + '*\n\r';
-          data += response.page[lineNo].line.translation.english.default + '\n';
-        }
+        console.log(responseData[lineNo].line.transliteration.devanagari.text);
+        console.log(responseData[lineNo].line.translation.english.default);
+        data += '\n\r*' + responseData[lineNo].line.transliteration.devanagari.text + '*\n\r';
+        data += responseData[lineNo].line.translation.english.default + '\n';
       });
       return encodeURI(data);
     }
@@ -84,7 +83,8 @@
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-          response = JSON.parse(this.responseText);
+          var response = JSON.parse(this.responseText);
+          responseData = response.page;
           console.log(response.pageno);
           $("#demo").html("<p/>");
           $("#demo").html($("#demo").html() + "Page No = " + response.pageno);
@@ -102,7 +102,8 @@
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-          response = JSON.parse(this.responseText);
+          var response = JSON.parse(this.responseText);
+          responseData = response.shabad;
           console.log(response.shabadinfo.shabadid);
           $("#demo").html("<p/>");
           $("#demo").html($("#demo").html() + "Shabad No = " + response.shabadinfo.shabadid);
