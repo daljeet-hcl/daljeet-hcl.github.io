@@ -2,9 +2,6 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="theme-color" content="#000000">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -21,47 +18,36 @@
 <body>
 
   <h4>Guru Granth Sahib</h4>
-
+  
   <div id="title"> </div>
   <div class="form-group" id="content">
-    <label for="page">Pageno:</label>
-    <input type="number" class="form-control" id="page">
+      <label for="page">Pageno:</label>
+    <input type="number" class="form-control"  id="page">
     <br>
     <button type="button" class="btn" onclick="loadXMLDoc()">Load Page</button>
     <button type="button" class="btn" id="copy"> WhatsApp Share </button>
 
-    <form id="demo"></form>
+    <form id="demo" ></form>
   </div>
 
   <script>
     var resonse;
 
-    function GetURLParameter(sParam) {
-      var sPageURL = window.location.search.substring(1);
-      var sURLVariables = sPageURL.split('&');
-      for (var i = 0; i < sURLVariables.length; i++) {
-        var sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] == sParam) {
-          return sParameterName[1];
-        }
-      }
-    }
-
-    $("#copy").click(function () {
-      var url = "whatsapp://send?text=" + getData();
-      window.open(url);
+    $("#copy").click( function() {
+    var url = "whatsapp://send?text=" + getData();
+    window.open(url);
     });
 
-    function getData() {
+    function getData(){
       var data = '';
       $('input:checkbox').filter(':checked').map(function () {
         var lineNo = $(this).val();
-        console.log("lineNo" + lineNo);
+        console.log("lineNo"+lineNo);
         console.log(response.page[lineNo].line.transliteration.devanagari.text);
         console.log(response.page[lineNo].line.translation.english.default);
-
+        
         data += '\n\r*' + response.page[lineNo].line.transliteration.devanagari.text + '*\n\r';
-        data += response.page[lineNo].line.translation.english.default + '\n';
+        data += response.page[lineNo].line.translation.english.default+'\n';
       });
       return encodeURI(data);
     }
@@ -73,12 +59,12 @@
           response = JSON.parse(this.responseText);
           console.log(response.pageno);
           $("#demo").html("<p/>");
-          $("#demo").html($("#demo").html() + "Page No = " + response.pageno);
-          $("#demo").html($("#demo").html() + "<br/>");
+          $("#demo").html( $("#demo").html() + "Page No = " + response.pageno);
+          $("#demo").html( $("#demo").html() + "<br/>");
 
           response.page.map((line, index) => {
-            $("#demo").html($("#demo").html() + "<br/> <input type='checkbox' value=" + index + " /><b>" + line.line.transliteration.devanagari.text + '</b>');
-            $("#demo").html($("#demo").html() + "<br/>" + line.line.translation.english.default + "<br/>");
+            $("#demo").html( $("#demo").html()+"<br/> <input type='checkbox' value="+index+" /><b>" + line.line.transliteration.devanagari.text+'</b>');
+            $("#demo").html( $("#demo").html()+ "<br/>"+ line.line.translation.english.default+"<br/>");
           });
         }
       };
