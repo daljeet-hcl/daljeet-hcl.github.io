@@ -22,14 +22,16 @@
 
   <h4>Guru Granth Sahib</h4>
 
-  <div id="title"> </div>
+  
+  
   <div class="form-group" id="content">
+    <form action="index.html" >
     <label for="page">Pageno:</label>
-    <input type="number" class="form-control" id="page">
+    <input type="number" class="form-control" id="page" name="page">
     <br>
-    <button type="button" class="btn" onclick="loadXMLDoc()">Load Page</button>
+    <button type="submit" class="btn">Load Page</button>
     <button type="button" class="btn" id="copy"> WhatsApp Share </button>
-
+    </form>
     <form id="demo"></form>
   </div>
 
@@ -41,7 +43,7 @@
       var page = getURLParameter("page");
       if (page != null) {
         $("#page").val(page);
-        loadXMLDoc();
+        loadXMLDoc(page);
       } else {
         var shabadID = getURLParameter("shabad");
         if (shabadID != null) {
@@ -79,22 +81,24 @@
       return encodeURI(data);
     }
 
-    function loadXMLDoc() {
+    function loadXMLDoc(pageNo) {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
           var response = JSON.parse(this.responseText);
           responseData = response.page;
           console.log(response.pageno);
-          $("#demo").html("<p/>");
-          $("#demo").html($("#demo").html() + "Page No = " + response.pageno);
-          $("#demo").html($("#demo").html() + "<br/>");
+          var previous=pageNo-1
+          var next=parseInt(pageNo)+1;
+          var header="<p/><a href='?page="+previous+"'> previous</a>  Page No = " + response.pageno +"  <a href='?page="+next+"'>next </a><br/>"
+          $("#demo").html(header); //add header
           response.page.map((line, index) => {
             displayLine(line, index)
           });
+          $("#demo").html($("#demo").html()+header); //add footer
         }
       };
-      xhttp.open("GET", "https://api.gurbaninow.com/v2/ang/" + $("#page").val(), true);
+      xhttp.open("GET", "https://api.gurbaninow.com/v2/ang/" + pageNo, true);
       xhttp.send();
     }
 
@@ -105,12 +109,15 @@
           var response = JSON.parse(this.responseText);
           responseData = response.shabad;
           console.log(response.shabadinfo.shabadid);
-          $("#demo").html("<p/>");
-          $("#demo").html($("#demo").html() + "Shabad No = " + response.shabadinfo.shabadid);
-          $("#demo").html($("#demo").html() + "<br/>");
+         
+          var previous=shabadID-1
+          var next=parseInt(shabadID)+1;
+          var header="<p/><a href='?shabad="+previous+"'> previous</a>  Shabad No = " + response.shabadinfo.shabadid +"  <a href='?shabad="+next+"'>next </a><br/>"
+          $("#demo").html(header); //add header
           response.shabad.map((line, index) => {
             displayLine(line, index)
           });
+          $("#demo").html($("#demo").html()+header); //add footer
         }
       };
       xhttp.open("GET", "https://api.gurbaninow.com/v2/shabad/" + shabadID, true);
