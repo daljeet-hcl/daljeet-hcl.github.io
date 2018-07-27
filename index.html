@@ -11,6 +11,14 @@
 
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!--material design libraries-->
+
+  <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
+    crossorigin="anonymous"></script>
+  <script>$(document).ready(function () { $('body').bootstrapMaterialDesign(); });</script>
+
 </head>
 <style>
   input#page {
@@ -22,22 +30,22 @@
 
   <h4>Guru Granth Sahib</h4>
 
-  
-  
+
+
   <div class="form-group" id="content">
-    <form action="index.html" >
-    <label for="page">Pageno:</label>
-    <input type="number" class="form-control" id="page" name="page">
-    <br>
-    <button type="submit" class="btn">Load Page</button>
-    <button type="button" class="btn" id="copy"> WhatsApp Share </button>
+    <form action="index.html">
+      <label for="page">Pageno:</label>
+      <input type="number" class="form-control" id="page" name="page">
+      <br>
+      <button type="submit" class="btn">Load Page</button>
+      <button type="button" class="btn" id="copy"> WhatsApp Share </button>
     </form>
     <form id="demo"></form>
   </div>
 
   <script>
     var responseData; //this would be array
-    //var response;
+    var info; //contain data about pageno, Source , Author etc 
 
     $(window).on("load", function () {
       var page = getURLParameter("page");
@@ -88,14 +96,15 @@
           var response = JSON.parse(this.responseText);
           responseData = response.page;
           console.log(response.pageno);
-          var previous=pageNo-1
-          var next=parseInt(pageNo)+1;
-          var header="<p/><a href='?page="+previous+"'> previous</a>  Page No = " + response.pageno +"  <a href='?page="+next+"'>next </a><br/>"
+          var previous = pageNo - 1
+          var next = parseInt(pageNo) + 1;
+          var header = "<p/><a href='?page=" + previous + "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a>  Page No = " + response.pageno + "  <a href='?page=" + next + "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/>"
+          
           $("#demo").html(header); //add header
           response.page.map((line, index) => {
             displayLine(line, index)
           });
-          $("#demo").html($("#demo").html()+header); //add footer
+          $("#demo").html($("#demo").html() + header); //add footer
         }
       };
       xhttp.open("GET", "https://api.gurbaninow.com/v2/ang/" + pageNo, true);
@@ -109,15 +118,16 @@
           var response = JSON.parse(this.responseText);
           responseData = response.shabad;
           console.log(response.shabadinfo.shabadid);
-         
-          var previous=shabadID-1
-          var next=parseInt(shabadID)+1;
-          var header="<p/><a href='?shabad="+previous+"'> previous</a>  Shabad No = " + response.shabadinfo.shabadid +"  <a href='?shabad="+next+"'>next </a><br/>"
+
+          var previous = shabadID - 1
+          var next = parseInt(shabadID) + 1;
+          var header = "<p/><a href='?page=" + previous + "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a>   Shabad No = " + response.shabadinfo.shabadid  + "  <a href='?page=" + next + "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/>"
+          
           $("#demo").html(header); //add header
           response.shabad.map((line, index) => {
             displayLine(line, index)
           });
-          $("#demo").html($("#demo").html()+header); //add footer
+          $("#demo").html($("#demo").html() + header); //add footer
         }
       };
       xhttp.open("GET", "https://api.gurbaninow.com/v2/shabad/" + shabadID, true);
