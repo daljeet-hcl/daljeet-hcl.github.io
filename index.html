@@ -121,7 +121,7 @@
 
           var previous = shabadID - 1
           var next = parseInt(shabadID) + 1;
-          var header = "<p/><a href='?page=" + previous + "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a>   Shabad No = " + response.shabadinfo.shabadid  + "  <a href='?page=" + next + "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/>"
+          var header = "<p/><a href='?shabad=" + previous + "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a>   Shabad No = " + response.shabadinfo.shabadid  + "  <a href='?shabad=" + next + "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/>"
           
           $("#demo").html(header); //add header
           response.shabad.map((line, index) => {
