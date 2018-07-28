@@ -13,7 +13,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <style>
-  input#search {
+  input#query {
     width: 25%
   }
 </style>
@@ -24,18 +24,44 @@
 
   <div id="title"> </div>
   <div class="form-group" id="content">
-      <a href="/index.html"> Page </a><label for="search">query:</label>
-    <input type="text" class="form-control" id="search">
+      <form action="shabadSearch.html">
+      <a href="/index.html"> Page </a><label for="search">query:</label>    
+    <input type="text" class="form-control" id="query" name="query">
     <br>
-    <button type="button" class="btn" onclick="loadXMLDoc()">First Letter </button>
-    <button type="button" class="btn" onclick="loadXMLDoc2()">Whole Word</button>
+    <button type="submit" class="btn">First Letter </button>
+    <button type="submit" class="btn">Whole Word</button>
+    </form>
     <form id="demo"></form>
   </div>
 
   <script>
-    var resonse;
+    var resonse; //response from server
+    var query; //shabad query
+    $(window).on("load", function () {
+      query = getURLParameter("query");
+      if (query != null) {
+        $("#query").val(query);
+        loadXMLDoc(query);
+      } else {
+        var word = getURLParameter("fullword");
+        if (word != null) {
+         
+        }
+      }
+    });
 
-    function loadXMLDoc() {
+    function getURLParameter(sParam) {
+      var sPageURL = window.location.search.substring(1);
+      var sURLVariables = sPageURL.split('&');
+      for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) {
+          return sParameterName[1];
+        }
+      }
+    }
+
+    function loadXMLDoc(query) {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -56,7 +82,7 @@
       };
 
       
-      xhttp.open("GET", "https://api.gurbaninow.com/v2/search/" + document.getElementById("search").value, true);
+      xhttp.open("GET", "https://api.gurbaninow.com/v2/search/" + query, true);
       xhttp.send();
     }
 
