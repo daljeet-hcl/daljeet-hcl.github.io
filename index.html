@@ -148,8 +148,8 @@
     }
 
     function displayLine(line, index) {
-      $("#demo").html($("#demo").html() + "<br/> <input type='checkbox' value=" + index + " /><b>" + line.line.transliteration.devanagari.text + '</b>');
-      $("#demo").html($("#demo").html() + "<br/>" + line.line.translation.english.default + "<br/>");
+      $("#demo").html($("#demo").html() + "<br/> <span id='"+line.line.id+"'><input type='checkbox' value=" + index + " /><b>" + line.line.transliteration.devanagari.text + '</b>');
+      $("#demo").html($("#demo").html() + "<br/>" + line.line.translation.english.default + "<br/> </span>");
     }
 
   </script>
