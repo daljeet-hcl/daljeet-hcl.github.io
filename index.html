@@ -25,7 +25,7 @@
     width: 25%
   }
   input#query{
-    width: 30%
+    width: 25%
   }
 </style>
 
@@ -191,16 +191,10 @@
             "   <b> <a href='?page="+x.shabad.pageno+"#"+x.shabad.id +"'>" + x.shabad.pageno + '</a><b>   ' + x.shabad.writer.english + "<br/>");
           });
         }
-      };
-
-      
+      }; 
       xhttp.open("GET", "https://api.gurbaninow.com/v2/search/" + query, true);
       xhttp.send();
     }
-
-
   </script>
-
 </body>
-
 </html>
