@@ -24,17 +24,23 @@
   input#page {
     width: 25%
   }
+  input#query{
+    width: 30%
+  }
 </style>
 
 <body>
 
   <h4>Guru Granth Sahib</h4>
-
-
-
-  <div class="form-group" id="content">
-    <form action="index.html">
-      <a href="/shabadSearch.html">Shabad </a><label for="page">Pageno:</label>
+ <div class="form-group" id="content">
+    <form action="index.html">    
+      <input type="text" class="form-control" id="query" name="query">
+    <br>
+    <button type="submit" class="btn">First Letter </button> 
+    
+    </form>
+    <form action="index.html"> 
+      <br/>
       <input type="number" class="form-control" id="page" name="page">
       <br>
       <button type="submit" class="btn">Load Page</button>
@@ -47,10 +53,17 @@
     var responseData; //this would be array
     var info = {}; //contains pageno, Source , writer 
     var page;  //this represents the URL parameter on page
+    var resonse; //response from server
+    var query; //shabad query
 
     $(window).on("load", function () {
       page = getURLParameter("page");
-      if (page != null) {
+     
+      query = getURLParameter("query");
+      if (query != null) {
+        $("#query").val(query);
+        loadQueryDoc(query);
+      }else { if(page != null) {
         $("#page").val(page);
         loadXMLDoc(page);
       } else {
@@ -59,7 +72,8 @@
           loadShabad(shabadID);
         }
       }
-    })
+      }
+    });
 
     function getURLParameter(sParam) {
       var sPageURL = window.location.search.substring(1);
@@ -158,6 +172,32 @@
       xhttp.open("GET", "https://api.gurbaninow.com/v2/shabad/" + shabadID, true);
       xhttp.send();
     }
+
+     function loadQueryDoc(query) {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          response = JSON.parse(this.responseText);
+          console.log(response.count);
+          console.log(response.shabads);
+          $("#demo").html("<p/>");
+          $("#demo").html($("#demo").html() + "Result Count = " + response.count);
+          $("#demo").html($("#demo").html() + "<br/>");
+
+          response.shabads.map((x, index) => {
+            console.log(x);
+            $("#demo").html($("#demo").html() + "<br/> <b> <a href='?shabad=" +x.shabad.shabadid +"#"+ x.shabad.id+"'> " + x.shabad.transliteration.devanagari.text + '</a> </b>');
+            $("#demo").html($("#demo").html() + "<br/><br/>" + x.shabad.source.english + 
+            "   <b> <a href='?page="+x.shabad.pageno+"#"+x.shabad.id +"'>" + x.shabad.pageno + '</a><b>   ' + x.shabad.writer.english + "<br/>");
+          });
+        }
+      };
+
+      
+      xhttp.open("GET", "https://api.gurbaninow.com/v2/search/" + query, true);
+      xhttp.send();
+    }
+
 
   </script>
 
