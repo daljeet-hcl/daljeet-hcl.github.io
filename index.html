@@ -105,7 +105,7 @@
    {
     $("#demo").html(header); //add header
     content.map((line, index) => {
-      $("#demo").html($("#demo").html() + "<br/> <span id='"+line.line.id+"'><input type='checkbox' value=" + index + " /><b>" + line.line.transliteration.devanagari.text + '</b>');
+      $("#demo").html($("#demo").html() + "<br/> <span class='bani' id='"+line.line.id+"'><input type='checkbox' value=" + index + " /><b>" + line.line.transliteration.devanagari.text + '</b>');
       $("#demo").html($("#demo").html() + "<br/>" + line.line.translation.english.default + "<br/> </span>");
     });
     $("#demo").html($("#demo").html() + header); //add footer
@@ -114,7 +114,10 @@
     element.scrollIntoView(); //scoll to anchor if any
     element.style.backgroundColor = 'Highlight';
     element.style.color = 'HighlightText';
+    }else{
+     document.getElementById(content[0].line.id).scrollIntoView();//scrol into first element
     }
+
    }
 
     function loadXMLDoc(pageNo) {
