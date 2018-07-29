@@ -101,6 +101,22 @@
       return encodeURI(data);
     }
 
+  function drawContent(header,content)
+   {
+    $("#demo").html(header); //add header
+    content.map((line, index) => {
+      $("#demo").html($("#demo").html() + "<br/> <span id='"+line.line.id+"'><input type='checkbox' value=" + index + " /><b>" + line.line.transliteration.devanagari.text + '</b>');
+      $("#demo").html($("#demo").html() + "<br/>" + line.line.translation.english.default + "<br/> </span>");
+    });
+    $("#demo").html($("#demo").html() + header); //add footer
+    var element=document.getElementById(location.hash.substr(1)); //find anchor
+    if(element!=null){
+    element.scrollIntoView(); //scoll to anchor if any
+    element.style.backgroundColor = 'Highlight';
+    element.style.color = 'HighlightText';
+    }
+   }
+
     function loadXMLDoc(pageNo) {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function () {
@@ -111,20 +127,14 @@
           var previous = pageNo - 1
           var next = parseInt(pageNo) + 1;
           var header = "<p/><a href='?page=" + previous + "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a>  Page No = " + response.pageno + "  <a href='?page=" + next + "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/>"
-
-          $("#demo").html(header); //add header
-          response.page.map((line, index) => {
-            displayLine(line, index)
-          });
-          $("#demo").html($("#demo").html() + header); //add footer
-          document.getElementById(location.hash.substr(1)).scrollIntoView(); //scoll to anchor if any
-        }
+          drawContent(header,response.page);  
+       }
       };
       xhttp.open("GET", "https://api.gurbaninow.com/v2/ang/" + pageNo, true);
       xhttp.send();
     }
 
-    function loadShabad(shabadID) {
+   function loadShabad(shabadID) {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -136,26 +146,14 @@
 
           var shabadinfo = info.writer + " <b> <a href='index.html?page=" + info.pageno + "'>page " + info.pageno + '</a> ' + info.source + '</b>  ';
           console.log(response.shabadinfo.shabadid);
-
           var previous = shabadID - 1;
           var next = parseInt(shabadID) + 1;
           var header = "<p/><a href='?shabad=" + previous + "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a> " + shabadinfo + "  <a href='?shabad=" + next + "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/>"
-
-          $("#demo").html(header); //add header
-          response.shabad.map((line, index) => {
-            displayLine(line, index)
-          });
-          $("#demo").html($("#demo").html() + header); //add footer
-          document.getElementById(location.hash.substr(1)).scrollIntoView(); //scoll to anchor if any
+          drawContent(header,response.shabad);
         }
       };
       xhttp.open("GET", "https://api.gurbaninow.com/v2/shabad/" + shabadID, true);
       xhttp.send();
-    }
-
-    function displayLine(line, index) {
-      $("#demo").html($("#demo").html() + "<br/> <span id='"+line.line.id+"'><input type='checkbox' value=" + index + " /><b>" + line.line.transliteration.devanagari.text + '</b>');
-      $("#demo").html($("#demo").html() + "<br/>" + line.line.translation.english.default + "<br/> </span>");
     }
 
   </script>
