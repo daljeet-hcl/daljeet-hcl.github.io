@@ -97,8 +97,8 @@
   var settings = {
     language: {
       bani: {
-        devnagari: true,
         gurmukhi: false,
+        devnagari: true,       
         both: false
       },
       translation: {
@@ -259,14 +259,25 @@
         $("#demo").html($("#demo").html() + "Result Count = " + response.count);
         $("#demo").html($("#demo").html() + "<br/>");
 
+        if(settings.language.bani.gurmukhi)  {
         response.shabads.map((x, index) => {
           console.log(x);
           $("#demo").html($("#demo").html() + "<br/> <b> <a href='?shabad=" + x.shabad.shabadid + "#" + x.shabad
-            .id + "'> " + x.shabad.transliteration.devanagari.text + '</a> </b>');
+            .id + "'>" + x.shabad.gurmukhi.unicode + '</a> </b>');
           $("#demo").html($("#demo").html() + "<br/><br/>" + x.shabad.source.english +
             "   <b> <a href='?page=" + x.shabad.pageno + "#" + x.shabad.id + "'>" + x.shabad.pageno +
             '</a><b>   ' + x.shabad.writer.english + "<br/>");
-        });
+         });
+         }else{
+          response.shabads.map((x, index) => {
+          console.log(x);
+          $("#demo").html($("#demo").html() + "<br/> <b> <a href='?shabad=" + x.shabad.shabadid + "#" + x.shabad
+            .id + "'>" + x.shabad.transliteration.devanagari.text + '</a> </b>');
+          $("#demo").html($("#demo").html() + "<br/><br/>" + x.shabad.source.english +
+            "   <b> <a href='?page=" + x.shabad.pageno + "#" + x.shabad.id + "'>" + x.shabad.pageno +
+            '</a><b>   ' + x.shabad.writer.english + "<br/>");
+         });
+         }
       }
     };
     xhttp.open("GET", "https://api.gurbaninow.com/v2/search/" + query, true);
