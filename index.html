@@ -86,7 +86,9 @@
   function myFunction() {
     var x = document.getElementById("myLinks");
     if (x.style.display === "block") {
-      x.style.display = "none";
+    x.style.display = "none";
+    baniLanguage=$("input[name='bani-language']:checked").val();
+    translationLanguage= $("input[name='translation']:checked").val();
     } else {
       x.style.display = "block";
     }
@@ -99,6 +101,8 @@
   var page; //this represents the URL parameter on page
   var resonse; //response from server
   var query; //shabad query
+  var baniLanguage;
+  var translationLanguage;
 
   var settings = {
     language: {
