@@ -55,6 +55,12 @@
     font-size: 17px;
     display: block;
   }
+  .radio-toolbar label {
+    color: white;
+  }
+  .legend {
+    color: white;
+  }
 
   .topnav a.icon {
     background: rgb(12, 3, 32);
@@ -292,9 +298,46 @@
       <b>Guru Granth Sahib</b>
     </a>
     <div id="myLinks">
-      <a href="#news">News</a>
-      <a href="#contact">Contact</a>
-      <a href="#about">About</a>
+        <div class="radio-toolbar">
+            <fieldset>
+              <legend><label>Gurubani Text</label></legend>
+              <div>
+                <input type="radio" id="devnagari" name="bani" checked />
+                <label for="devnagari">Devnagari</label>
+              </div>
+              <div>
+                <input type="radio" id="gurmukhi" name="bani" />
+                <label for="gurmukhi">Gurmukhi</label>
+              </div>
+              <div>
+                <input type="radio" id="both" name="bani" />
+                <label for="both">both</label>
+              </div>
+            </fieldset>
+          </div>
+          <div class="radio-toolbar">
+            <fieldset>
+              <legend ><label>Translation</label> </legend>
+              <div>
+                <input type="radio" id="english" name="translation" checked />
+                <label for="english">English</label>
+              </div>
+              <div>
+                <input type="radio" id="punjabi" name="translation" />
+                <label for="punjabi">Punjabi</label>
+              </div>
+              <div>
+                <input type="radio" id="none" name="translation" />
+                <label for="none">none</label>
+              </div>
+            </fieldset>
+          </div>
+          <div class="radio-toolbar">
+          <legend><label>Font Size</label></legend>
+            <input type="range" min="12" max="35" value="15" class="slider" id="myRange">
+          </div>
+
+
     </div>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
