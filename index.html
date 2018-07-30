@@ -4,6 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- for top navigation-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
   <meta name="theme-color" content="#000000">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- Latest compiled and minified CSS -->
@@ -17,61 +20,97 @@
     crossorigin="anonymous"></script>
   <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
     crossorigin="anonymous"></script>
-  <script>$(document).ready(function () { $('body').bootstrapMaterialDesign(); });</script>
+  <script>
+    $(document).ready(function () {
+      $('body').bootstrapMaterialDesign();
+    });
+  </script>
 
 </head>
 <style>
   input#page {
     width: 25%
   }
-  input#query{
+
+  input#query {
     width: 25%
   }
 </style>
+<!-- for top navigation-->
+<style>
+  .topnav {
+    overflow: hidden;
+    background-color: rgb(12, 3, 32);
+    position: fixed,relative;
+  }
 
-<body>
+  .topnav #myLinks {
+    display: none;
+  }
 
-  <h4>Guru Granth Sahib</h4>
- <div class="form-group" id="content">
-    <form action="index.html">    
-      <input type="text" class="form-control" id="query" name="query">
-    <br>
-    <button type="submit" class="btn">First Letter </button> 
-    
-    </form>
-    <form action="index.html"> 
-      <br/>
-      <input type="number" class="form-control" id="page" name="page">
-      <br>
-      <button type="submit" class="btn">Load Page</button>
-      <button type="button" class="btn" id="copy"> WhatsApp Share </button>
-    </form>
-    <form id="demo"></form>
-  </div>
+  .topnav a {
+    color: white;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    display: block;
+  }
+
+  .topnav a.icon {
+    background: rgb(12, 3, 32);
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  .active {
+    background-color: rgb(248, 163, 6);
+    color: white;
+  }
+</style>
+
+<script>
+ //for top navigation
+  function myFunction() {
+    var x = document.getElementById("myLinks");
+    if (x.style.display === "block") {
+      x.style.display = "none";
+    } else {
+      x.style.display = "block";
+    }
+  }
+</script>
 
   <script>
     var responseData; //this would be array
     var info = {}; //contains pageno, Source , writer 
-    var page;  //this represents the URL parameter on page
+    var page; //this represents the URL parameter on page
     var resonse; //response from server
     var query; //shabad query
 
     $(window).on("load", function () {
       page = getURLParameter("page");
-     
+
       query = getURLParameter("query");
       if (query != null) {
         $("#query").val(query);
         loadQueryResult(query);
-      }else { if(page != null) {
-        $("#page").val(page);
-        loadPageAng(page);
       } else {
-        var shabadID = getURLParameter("shabad");
-        if (shabadID != null) {
-          loadShabad(shabadID);
+        if (page != null) {
+          $("#page").val(page);
+          loadPageAng(page);
+        } else {
+          var shabadID = getURLParameter("shabad");
+          if (shabadID != null) {
+            loadShabad(shabadID);
+          }
         }
-      }
       }
     });
 
@@ -92,7 +131,7 @@
     });
 
     function scrollTo(hash) {
-    location.hash = "#" + hash;
+      location.hash = "#" + hash;
     }
 
     function getData() {
@@ -110,29 +149,30 @@
         console.log(responseData[lineNo].line.transliteration.devanagari.text);
         console.log(responseData[lineNo].line.translation.english.default);
         data += '\n\r*' + responseData[lineNo].line.transliteration.devanagari.text + '*\n\r';
-        data += responseData[lineNo].line.translation.english.default + '\n';
+        data += responseData[lineNo].line.translation.english.default+'\n';
       });
       return encodeURI(data);
     }
 
-  function drawContent(header,content)
-   {
-    $("#demo").html(header); //add header
-    content.map((line, index) => {
-      $("#demo").html($("#demo").html() + "<br/> <span class='bani' id='"+line.line.id+"'><input type='checkbox' value=" + index + " /><b>" + line.line.transliteration.devanagari.text + '</b>');
-      $("#demo").html($("#demo").html() + "<br/>" + line.line.translation.english.default + "<br/> </span>");
-    });
-    $("#demo").html($("#demo").html() + header); //add footer
-    var element=document.getElementById(location.hash.substr(1)); //find anchor
-    if(element!=null){
-    element.scrollIntoView(); //scoll to anchor if any
-    element.style.backgroundColor = 'Highlight';
-    element.style.color = 'HighlightText';
-    }else{
-     document.getElementById(content[0].line.id).scrollIntoView();//scrol into first element
-    }
+    function drawContent(header, content) {
+      $("#demo").html(header); //add header
+      content.map((line, index) => {
+        $("#demo").html($("#demo").html() + "<br/> <span class='bani' id='" + line.line.id +
+          "'><input type='checkbox' value=" + index + " /><b>" + line.line.transliteration.devanagari.text +
+          '</b>');
+        $("#demo").html($("#demo").html() + "<br/>" + line.line.translation.english.default+"<br/> </span>");
+      });
+      $("#demo").html($("#demo").html() + header); //add footer
+      var element = document.getElementById(location.hash.substr(1)); //find anchor
+      if (element != null) {
+        element.scrollIntoView(); //scoll to anchor if any
+        element.style.backgroundColor = 'Highlight';
+        element.style.color = 'HighlightText';
+      } else {
+        document.getElementById(content[0].line.id).scrollIntoView(); //scrol into first element
+      }
 
-   }
+    }
 
     function loadPageAng(pageNo) {
       var xhttp = new XMLHttpRequest();
@@ -143,15 +183,18 @@
           console.log(response.pageno);
           var previous = pageNo - 1
           var next = parseInt(pageNo) + 1;
-          var header = "<p/><a href='?page=" + previous + "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a>  Page No = " + response.pageno + "  <a href='?page=" + next + "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/>"
-          drawContent(header,response.page);  
-       }
+          var header = "<p/><a href='?page=" + previous +
+            "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a>  Page No = " +
+            response.pageno + "  <a href='?page=" + next +
+            "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/>"
+          drawContent(header, response.page);
+        }
       };
       xhttp.open("GET", "https://api.gurbaninow.com/v2/ang/" + pageNo, true);
       xhttp.send();
     }
-   
-   function loadShabad(shabadID) {
+
+    function loadShabad(shabadID) {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -161,19 +204,23 @@
           info.writer = response.shabadinfo.writer.english;
           info.pageno = response.shabadinfo.pageno;
 
-          var shabadinfo = info.writer + " <b> <a href='index.html?page=" + info.pageno + "'>page " + info.pageno + '</a> ' + info.source + '</b>  ';
+          var shabadinfo = info.writer + " <b> <a href='index.html?page=" + info.pageno + "'>page " + info.pageno +
+            '</a> ' + info.source + '</b>  ';
           console.log(response.shabadinfo.shabadid);
           var previous = shabadID - 1;
           var next = parseInt(shabadID) + 1;
-          var header = "<p/><a href='?shabad=" + previous + "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a> " + shabadinfo + "  <a href='?shabad=" + next + "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/>"
-          drawContent(header,response.shabad);
+          var header = "<p/><a href='?shabad=" + previous +
+            "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a> " +
+            shabadinfo + "  <a href='?shabad=" + next +
+            "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/>"
+          drawContent(header, response.shabad);
         }
       };
       xhttp.open("GET", "https://api.gurbaninow.com/v2/shabad/" + shabadID, true);
       xhttp.send();
     }
 
-     function loadQueryResult(query) {
+    function loadQueryResult(query) {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -186,15 +233,50 @@
 
           response.shabads.map((x, index) => {
             console.log(x);
-            $("#demo").html($("#demo").html() + "<br/> <b> <a href='?shabad=" +x.shabad.shabadid +"#"+ x.shabad.id+"'> " + x.shabad.transliteration.devanagari.text + '</a> </b>');
-            $("#demo").html($("#demo").html() + "<br/><br/>" + x.shabad.source.english + 
-            "   <b> <a href='?page="+x.shabad.pageno+"#"+x.shabad.id +"'>" + x.shabad.pageno + '</a><b>   ' + x.shabad.writer.english + "<br/>");
+            $("#demo").html($("#demo").html() + "<br/> <b> <a href='?shabad=" + x.shabad.shabadid + "#" + x.shabad
+              .id + "'> " + x.shabad.transliteration.devanagari.text + '</a> </b>');
+            $("#demo").html($("#demo").html() + "<br/><br/>" + x.shabad.source.english +
+              "   <b> <a href='?page=" + x.shabad.pageno + "#" + x.shabad.id + "'>" + x.shabad.pageno +
+              '</a><b>   ' + x.shabad.writer.english + "<br/>");
           });
         }
-      }; 
+      };
       xhttp.open("GET", "https://api.gurbaninow.com/v2/search/" + query, true);
       xhttp.send();
     }
   </script>
+  
+  <body >
+      <!-- Top Navigation Menu -->
+      <div class="topnav">
+        <a href="#home" class="active"><b>Guru Granth Sahib</b></a>
+        <div id="myLinks">
+          <a href="#news">News</a>
+          <a href="#contact">Contact</a>
+          <a href="#about">About</a>
+        </div>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
+      <!-- end navigation bar-->
+      
+      <br> 
+      <div class="form-group" id="content" style="padding-left:5px" >
+        <form action="index.html">
+          <input type="text" class="form-control" id="query" name="query">
+          <br>
+          <button type="submit" class="btn">First Letter </button>
+        </form>
+        <form action="index.html">
+          <br/>
+          <input type="number" class="form-control" id="page" name="page">
+          <br>
+          <button type="submit" class="btn">Load Page</button>
+          <button type="button" class="btn" id="copy"> WhatsApp Share </button>
+        </form>
+        <div id="demo" style="padding-left:2px"></div>
+      </div>
 </body>
+
 </html>
