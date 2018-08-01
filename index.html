@@ -21,7 +21,7 @@
   <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-  
+
   <script>
     $(document).ready(function () {
       $('body').bootstrapMaterialDesign();
@@ -93,7 +93,7 @@
       x.style.display = "none";
       baniLanguage = $("input[name='bani-language']:checked").val();
       translationLanguage = $("input[name='translation']:checked").val();
-      Cookies.set("baniLanguage",baniLanguage);
+      Cookies.set("baniLanguage", baniLanguage);
       pageType();
     } else {
       x.style.display = "block";
@@ -110,17 +110,16 @@
   var pageType; //whether shabad,query or page
   var shabadID; //shabad being displayed if any
   var page; // page being displayed
- 
+
 
   var baniLanguage = Cookies.get('baniLanguage');
-  if(baniLanguage==null)
-  { 
-    baniLanguage="devnagari";
+  if (baniLanguage == null) {
+    baniLanguage = "devnagari";
   }
   var translationLanguage = Cookies.get("translationLanguage");
-  if(translationLanguage==null){
-     translationLanguage="english";
-  } 
+  if (translationLanguage == null) {
+    translationLanguage = "english";
+  }
 
   var settings = {
     language: {
@@ -143,17 +142,17 @@
     query = getURLParameter("query");
     if (query != null) {
       $("#query").val(query);
-      pageType=loadQueryResult;
+      pageType = loadQueryResult;
       loadQueryResult();
     } else {
       if (page != null) {
         $("#page").val(page);
-        pageType=loadPageAng;
+        pageType = loadPageAng;
         loadPageAng();
       } else {
         shabadID = getURLParameter("shabad");
         if (shabadID != null) {
-          pageType=loadShabad;
+          pageType = loadShabad;
           loadShabad();
         }
       }
@@ -198,23 +197,21 @@
 
   function drawContent(header, content) {
     $("#demo").html(header); //add header
-   var baniText;
-   var baniTranslation;
+    var baniText;
+    var baniTranslation;
     if (baniLanguage == "gurmukhi") {
       baniText = "line.line.gurmukhi.unicode";
     } else {
-        baniText = "line.line.transliteration.devanagari.text";      
+      baniText = "line.line.transliteration.devanagari.text";
     }
-    if(translationLanguage=="english")
-    {
-      baniTranslation= "line.line.translation.english.default";
+    if (translationLanguage == "english") {
+      baniTranslation = "line.line.translation.english.default";
     }
     content.map((line, index) => {
       $("#demo").html($("#demo").html() + "<br/> <span class='bani' id='" + line.line.id +
-        "'><input type='checkbox' value=" + index + " />");
-      $("#demo").html($("#demo").html() + '<b>' + eval(baniText) + '</b>');
-      $("#demo").html($("#demo").html() + "<br/>" +eval(baniTranslation)+"<br/> </span>");      
+        "'><label> <input type='checkbox' value=" + index + '><b>' + eval(baniText) + '</b> </label>' + "<br/>" + eval(baniTranslation) + "<br/> </span>");
     });
+    
     $("#demo").html($("#demo").html() + header); //add footer
     var element = document.getElementById(location.hash.substr(1)); //find anchor
     if (element != null) {
