@@ -55,9 +55,11 @@
     font-size: 17px;
     display: block;
   }
+
   .radio-toolbar label {
     color: white;
   }
+
   .legend {
     color: white;
   }
@@ -86,10 +88,10 @@
   function myFunction() {
     var x = document.getElementById("myLinks");
     if (x.style.display === "block") {
-    x.style.display = "none";
-    baniLanguage=$("input[name='bani-language']:checked").val();
-    translationLanguage= $("input[name='translation']:checked").val();
-    console.log(baniLanguage);
+      x.style.display = "none";
+      baniLanguage = $("input[name='bani-language']:checked").val();
+      translationLanguage = $("input[name='translation']:checked").val();
+      console.log(baniLanguage);
     } else {
       x.style.display = "block";
     }
@@ -102,14 +104,14 @@
   var page; //this represents the URL parameter on page
   var resonse; //response from server
   var query; //shabad query
-  var baniLanguage;
-  var translationLanguage;
+  var baniLanguage = "both";
+  var translationLanguage = "english";
 
   var settings = {
     language: {
       bani: {
         gurmukhi: false,
-        devnagari: true,       
+        devnagari: true,
         both: false
       },
       translation: {
@@ -179,28 +181,22 @@
 
   function drawContent(header, content) {
     $("#demo").html(header); //add header
+   var baniText;
+   var baniTranslation;
+    if (baniLanguage == "gurmukhi") {
+      baniText = "line.line.gurmukhi.unicode";
+    } else {
+        baniText = "line.line.transliteration.devanagari.text";      
+    }
+    if(translationLanguage=="english")
+    {
+      baniTranslation= "line.line.translation.english.default";
+    }
     content.map((line, index) => {
       $("#demo").html($("#demo").html() + "<br/> <span class='bani' id='" + line.line.id +
         "'><input type='checkbox' value=" + index + " />");
-      
-      if (settings.language.bani.gurmukhi) {
-        $("#demo").html($("#demo").html() + '<b>' + line.line.gurmukhi.unicode + '</b>');
-      } else {
-        if (settings.language.bani.devnagari) {
-          $("#demo").html($("#demo").html() + '<b>' + line.line.transliteration.devanagari.text + '</b>');
-        } else if (settings.language.bani.both) {
-          $("#demo").html($("#demo").html() + '<b>' + line.line.gurmukhi.unicode + '</br>' + line.line.transliteration
-            .devanagari.text + '</b>');
-        }
-      }
-      if (settings.language.translation.english) {
-        $("#demo").html($("#demo").html() + "<br/>" + line.line.translation.english.default+"<br/> </span>");
-      } else {
-        if (settings.language.translation.punjabi) {
-          $("#demo").html($("#demo").html() + "<br/>" + line.line.translation.punjabi.default.unicode +
-            "<br/> </span>");
-        }
-      }
+      $("#demo").html($("#demo").html() + '<b>' + eval(baniText) + '</b>');
+      $("#demo").html($("#demo").html() + "<br/>" +eval(baniTranslation)+"<br/> </span>");      
     });
     $("#demo").html($("#demo").html() + header); //add footer
     var element = document.getElementById(location.hash.substr(1)); //find anchor
@@ -270,25 +266,25 @@
         $("#demo").html($("#demo").html() + "Result Count = " + response.count);
         $("#demo").html($("#demo").html() + "<br/>");
 
-        if(settings.language.bani.gurmukhi)  {
-        response.shabads.map((x, index) => {
-          console.log(x);
-          $("#demo").html($("#demo").html() + "<br/> <b> <a href='?shabad=" + x.shabad.shabadid + "#" + x.shabad
-            .id + "'>" + x.shabad.gurmukhi.unicode + '</a> </b>');
-          $("#demo").html($("#demo").html() + "<br/><br/>" + x.shabad.source.english +
-            "   <b> <a href='?page=" + x.shabad.pageno + "#" + x.shabad.id + "'>" + x.shabad.pageno +
-            '</a><b>   ' + x.shabad.writer.english + "<br/>");
-         });
-         }else{
+        if (settings.language.bani.gurmukhi) {
           response.shabads.map((x, index) => {
-          console.log(x);
-          $("#demo").html($("#demo").html() + "<br/> <b> <a href='?shabad=" + x.shabad.shabadid + "#" + x.shabad
-            .id + "'>" + x.shabad.transliteration.devanagari.text + '</a> </b>');
-          $("#demo").html($("#demo").html() + "<br/><br/>" + x.shabad.source.english +
-            "   <b> <a href='?page=" + x.shabad.pageno + "#" + x.shabad.id + "'>" + x.shabad.pageno +
-            '</a><b>   ' + x.shabad.writer.english + "<br/>");
-         });
-         }
+            console.log(x);
+            $("#demo").html($("#demo").html() + "<br/> <b> <a href='?shabad=" + x.shabad.shabadid + "#" + x.shabad
+              .id + "'>" + x.shabad.gurmukhi.unicode + '</a> </b>');
+            $("#demo").html($("#demo").html() + "<br/><br/>" + x.shabad.source.english +
+              "   <b> <a href='?page=" + x.shabad.pageno + "#" + x.shabad.id + "'>" + x.shabad.pageno +
+              '</a><b>   ' + x.shabad.writer.english + "<br/>");
+          });
+        } else {
+          response.shabads.map((x, index) => {
+            console.log(x);
+            $("#demo").html($("#demo").html() + "<br/> <b> <a href='?shabad=" + x.shabad.shabadid + "#" + x.shabad
+              .id + "'>" + x.shabad.transliteration.devanagari.text + '</a> </b>');
+            $("#demo").html($("#demo").html() + "<br/><br/>" + x.shabad.source.english +
+              "   <b> <a href='?page=" + x.shabad.pageno + "#" + x.shabad.id + "'>" + x.shabad.pageno +
+              '</a><b>   ' + x.shabad.writer.english + "<br/>");
+          });
+        }
       }
     };
     xhttp.open("GET", "https://api.gurbaninow.com/v2/search/" + query, true);
@@ -303,44 +299,50 @@
       <b>Guru Granth Sahib</b>
     </a>
     <div id="myLinks">
-        <div class="radio-toolbar">
-            <fieldset>
-              <legend><label>Gurubani Text</label></legend>
-              <div>
-                <input type="radio" value="devnagari" name="bani-language" checked />
-                <label for="devnagari">Devnagari</label>
-              </div>
-              <div>
-                <input type="radio" value="gurmukhi" name="bani-language" />
-                <label for="gurmukhi">Gurmukhi</label>
-              </div>
-              <div>
-                <input type="radio" value="both" name="bani-language" />
-                <label for="both">both</label>
-              </div>
-            </fieldset>
+      <div class="radio-toolbar">
+        <fieldset>
+          <legend>
+            <label>Gurubani Text</label>
+          </legend>
+          <div>
+            <input type="radio" value="devnagari" name="bani-language" checked />
+            <label for="devnagari">Devnagari</label>
           </div>
-          <div class="radio-toolbar">
-            <fieldset>
-              <legend ><label>Translation</label> </legend>
-              <div>
-                <input type="radio" value="english" name="translation" checked />
-                <label for="english">English</label>
-              </div>
-              <div>
-                <input type="radio" value="punjabi" name="translation" />
-                <label for="punjabi">Punjabi</label>
-              </div>
-              <div>
-                <input type="radio" value="none" name="translation" />
-                <label for="none">none</label>
-              </div>
-            </fieldset>
+          <div>
+            <input type="radio" value="gurmukhi" name="bani-language" />
+            <label for="gurmukhi">Gurmukhi</label>
           </div>
-          <div class="radio-toolbar">
-          <legend><label>Font Size</label></legend>
-            <input type="range" min="12" max="35" value="15" class="slider" id="myRange">
+          <div>
+            <input type="radio" value="both" name="bani-language" />
+            <label for="both">both</label>
           </div>
+        </fieldset>
+      </div>
+      <div class="radio-toolbar">
+        <fieldset>
+          <legend>
+            <label>Translation</label>
+          </legend>
+          <div>
+            <input type="radio" value="english" name="translation" checked />
+            <label for="english">English</label>
+          </div>
+          <div>
+            <input type="radio" value="punjabi" name="translation" />
+            <label for="punjabi">Punjabi</label>
+          </div>
+          <div>
+            <input type="radio" value="none" name="translation" />
+            <label for="none">none</label>
+          </div>
+        </fieldset>
+      </div>
+      <div class="radio-toolbar">
+        <legend>
+          <label>Font Size</label>
+        </legend>
+        <input type="range" min="12" max="35" value="15" class="slider" id="myRange">
+      </div>
 
 
     </div>
