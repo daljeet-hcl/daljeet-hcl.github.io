@@ -20,6 +20,8 @@
     crossorigin="anonymous"></script>
   <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
     crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+  
   <script>
     $(document).ready(function () {
       $('body').bootstrapMaterialDesign();
@@ -91,7 +93,7 @@
       x.style.display = "none";
       baniLanguage = $("input[name='bani-language']:checked").val();
       translationLanguage = $("input[name='translation']:checked").val();
-      console.log(baniLanguage);
+      Cookies.set("baniLanguage",baniLanguage);
     } else {
       x.style.display = "block";
     }
@@ -104,8 +106,17 @@
   var page; //this represents the URL parameter on page
   var resonse; //response from server
   var query; //shabad query
-  var baniLanguage = "both";
-  var translationLanguage = "english";
+  document.cookie = "username=John Doe";
+ 
+  var baniLanguage = Cookies.get('baniLanguage');
+  if(baniLanguage==null)
+  { 
+    baniLanguage="devnagari";
+  }
+  var translationLanguage = Cookies.get("translationLanguage");
+  if(translationLanguage==null){
+     translationLanguage="english";
+  } 
 
   var settings = {
     language: {
@@ -125,7 +136,6 @@
 
   $(window).on("load", function () {
     page = getURLParameter("page");
-
     query = getURLParameter("query");
     if (query != null) {
       $("#query").val(query);
