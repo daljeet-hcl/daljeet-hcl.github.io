@@ -94,7 +94,7 @@
       baniLanguage = $("input[name='bani-language']:checked").val();
       translationLanguage = $("input[name='translation']:checked").val();
       Cookies.set("baniLanguage",baniLanguage);
-      location.reload();
+      pageType();
     } else {
       x.style.display = "block";
     }
@@ -144,7 +144,7 @@
     if (query != null) {
       $("#query").val(query);
       pageType=loadQueryResult;
-      loadQueryResult(query);
+      loadQueryResult();
     } else {
       if (page != null) {
         $("#page").val(page);
@@ -272,7 +272,7 @@
     xhttp.send();
   }
 
-  function loadQueryResult(query) {
+  function loadQueryResult() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
