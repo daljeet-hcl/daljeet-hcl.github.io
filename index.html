@@ -94,6 +94,7 @@
       baniLanguage = $("input[name='bani-language']:checked").val();
       translationLanguage = $("input[name='translation']:checked").val();
       Cookies.set("baniLanguage",baniLanguage);
+      location.reload();
     } else {
       x.style.display = "block";
     }
@@ -106,8 +107,11 @@
   var page; //this represents the URL parameter on page
   var resonse; //response from server
   var query; //shabad query
-  document.cookie = "username=John Doe";
+  var pageType; //whether shabad,query or page
+  var shabadID; //shabad being displayed if any
+  var page; // page being displayed
  
+
   var baniLanguage = Cookies.get('baniLanguage');
   if(baniLanguage==null)
   { 
@@ -139,15 +143,18 @@
     query = getURLParameter("query");
     if (query != null) {
       $("#query").val(query);
+      pageType=loadQueryResult;
       loadQueryResult(query);
     } else {
       if (page != null) {
         $("#page").val(page);
-        loadPageAng(page);
+        pageType=loadPageAng;
+        loadPageAng();
       } else {
-        var shabadID = getURLParameter("shabad");
+        shabadID = getURLParameter("shabad");
         if (shabadID != null) {
-          loadShabad(shabadID);
+          pageType=loadShabad;
+          loadShabad();
         }
       }
     }
@@ -219,15 +226,15 @@
     }
   }
 
-  function loadPageAng(pageNo) {
+  function loadPageAng() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         var response = JSON.parse(this.responseText);
         responseData = response.page;
         console.log(response.pageno);
-        var previous = pageNo - 1
-        var next = parseInt(pageNo) + 1;
+        var previous = page - 1
+        var next = parseInt(page) + 1;
         var header = "<p/><a href='?page=" + previous +
           "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a>  Page No = " +
           response.pageno + "  <a href='?page=" + next +
@@ -235,11 +242,11 @@
         drawContent(header, response.page);
       }
     };
-    xhttp.open("GET", "https://api.gurbaninow.com/v2/ang/" + pageNo, true);
+    xhttp.open("GET", "https://api.gurbaninow.com/v2/ang/" + page, true);
     xhttp.send();
   }
 
-  function loadShabad(shabadID) {
+  function loadShabad() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
