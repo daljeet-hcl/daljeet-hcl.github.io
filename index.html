@@ -89,6 +89,7 @@
     x.style.display = "none";
     baniLanguage=$("input[name='bani-language']:checked").val();
     translationLanguage= $("input[name='translation']:checked").val();
+    console.log(baniLanguage);
     } else {
       x.style.display = "block";
     }
@@ -181,7 +182,7 @@
     content.map((line, index) => {
       $("#demo").html($("#demo").html() + "<br/> <span class='bani' id='" + line.line.id +
         "'><input type='checkbox' value=" + index + " />");
-
+      
       if (settings.language.bani.gurmukhi) {
         $("#demo").html($("#demo").html() + '<b>' + line.line.gurmukhi.unicode + '</b>');
       } else {
