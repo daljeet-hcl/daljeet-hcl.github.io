@@ -83,6 +83,11 @@
     background-color: rgb(248, 163, 6);
     color: white;
   }
+
+  .bani {
+    font-size: 1.15em;
+    /* 14px/16=0.875em */
+  }
 </style>
 
 <script>
@@ -209,9 +214,10 @@
     }
     content.map((line, index) => {
       $("#demo").html($("#demo").html() + "<br/> <span class='bani' id='" + line.line.id +
-        "'><label> <input type='checkbox' value=" + index + '><b>' + eval(baniText) + '</b> </label>' + "<br/>" + eval(baniTranslation) + "<br/> </span>");
+        "'><label> <input type='checkbox' value=" + index + '><b>' + eval(baniText) + '</b> </label> <br/> </span>' +
+        eval(baniTranslation) + "<br/>");
     });
-    
+
     $("#demo").html($("#demo").html() + header); //add footer
     var element = document.getElementById(location.hash.substr(1)); //find anchor
     if (element != null) {
