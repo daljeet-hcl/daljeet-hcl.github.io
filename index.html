@@ -200,7 +200,7 @@
     return encodeURI(data);
   }
 
-  function drawContent(header, content) {
+  function drawContent(header, content,source) {
     $("#demo").html(header); //add header
     var baniText;
     var baniTranslation;
@@ -260,14 +260,15 @@
         info.pageno = response.shabadinfo.pageno;
 
         var shabadinfo = info.writer + " <b> <a href='index.html?page=" + info.pageno + "'>page " + info.pageno +
-          '</a> ' + info.source + '</b>  ';
+          '</a> ' + '</b>  ';
         console.log(response.shabadinfo.shabadid);
         var previous = shabadID - 1;
         var next = parseInt(shabadID) + 1;
-        var header = "<p/><a href='?shabad=" + previous +
+        var header = "<p/>    <b> "+ info.source + "</b><br/><a href='?shabad=" + previous +
           "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a> " +
           shabadinfo + "  <a href='?shabad=" + next +
           "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/>"
+          
         drawContent(header, response.shabad);
       }
     };
