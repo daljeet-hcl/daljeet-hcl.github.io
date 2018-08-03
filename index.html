@@ -86,14 +86,11 @@
     font-size: 1.15em;
     /* 14px/16=0.875em */
   }
-
 </style>
 
 <script>
   var responseData; //this would be array
   var info = {}; //contains pageno, Source , writer 
-  var page; //this represents the URL parameter on page
-  var resonse; //response from server
   var query; //shabad query
   var pageType; //whether shabad,query or page
   var shabadID; //shabad being displayed if any
@@ -103,13 +100,11 @@
   if (baniLanguage == null) {
     baniLanguage = "devnagari";
   }
-   //select appropriate radio button in settings
 
   var translationLanguage = Cookies.get("translationLanguage");
   if (translationLanguage == null) {
     translationLanguage = "english";
   }
-   //select appropriate radio button in settings
 
   //for top navigation
   function myFunction() {
@@ -122,14 +117,9 @@
       pageType();
     } else {
       x.style.display = "block";
-      $('#'+baniLanguage).prop("checked", true); //select radio buttons as per cookies
-      $('#'+translationLanguage).prop("checked", true);
+      $('#' + baniLanguage).prop("checked", true); //select radio buttons as per cookies
+      $('#' + translationLanguage).prop("checked", true);
     }
-  }
-
-  function whatsAppShare() {
-    var url = "whatsapp://send?text=" + getData();
-    window.open(url);
   }
 
   $(window).on("load", function () {
@@ -170,8 +160,8 @@
   //get data for sending on whatsApp
   function getData() {
     var firstSelectedLine = $($('input:checkbox').filter(':checked')[0]).val();
-    if (page != null) {
-      info.pageno = page;
+    if (pageID != null) {
+      info.pageno = pageID;
       info.source = "Guru Granth Sahib";
       info.writer = responseData[firstSelectedLine].line.writer.english;
     }
@@ -238,6 +228,12 @@
     } else {
       document.getElementById(content[0].line.id).scrollIntoView(); //scrol into first element
     }
+
+    var checkboxes = $("input[type='checkbox']");
+    //disable whats app button if no checkbox selected
+    checkboxes.click(function () {
+      $('#whatsapp').attr("disabled", !checkboxes.is(":checked"));
+    });
   }
 
   function loadPageAng() {
@@ -275,7 +271,8 @@
         console.log(response.shabadinfo.shabadid);
         var previous = shabadID - 1;
         var next = parseInt(shabadID) + 1;
-        var header = "<p/><div id='bani-source'> <b style='margin-left: 40px;'>" + info.source + "</b><br/></div><a href='?shabad=" + previous +
+        var header = "<p/><div id='bani-source'> <b style='margin-left: 40px;'>" + info.source +
+          "</b><br/></div><a href='?shabad=" + previous +
           "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a> " +
           shabadinfo + "  <a href='?shabad=" + next +
           "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/>"
@@ -303,10 +300,11 @@
           baniText = "x.shabad.gurmukhi.unicode";
         } else {
           baniText = "x.shabad.transliteration.devanagari.text";
-        } 
+        }
         response.shabads.map((x, index) => {
           console.log(x);
-          $("#demo").html($("#demo").html() + "<br/> <b> <a href='?shabad=" + x.shabad.shabadid + "#" + x.shabad.id + "'>" + eval(baniText) + '</a> </b><br/>' + x.shabad.source.english +
+          $("#demo").html($("#demo").html() + "<br/> <b> <a href='?shabad=" + x.shabad.shabadid + "#" + x.shabad.id +
+            "'>" + eval(baniText) + '</a> </b><br/>' + x.shabad.source.english +
             "   <b> <a href='?page=" + x.shabad.pageno + "#" + x.shabad.id + "'>" + x.shabad.pageno +
             '</a><b>   ' + x.shabad.writer.english + "<br/>");
         });
@@ -331,15 +329,15 @@
           </legend>
           <div>
             <label>
-              <input type="radio" value="devnagari" name="bani-language" id="devnagari"/> Devnagari</label>
+              <input type="radio" value="devnagari" name="bani-language" id="devnagari" /> Devnagari</label>
           </div>
           <div>
             <label>
-              <input type="radio" value="gurmukhi" name="bani-language" id="gurmukhi"/> Gurmukhi
+              <input type="radio" value="gurmukhi" name="bani-language" id="gurmukhi" /> Gurmukhi
             </label>
           </div>
-          <label>Font Size : </label>
-          <input type="range" min="12" max="35" value="15" class="slider" id="myRange">
+          <!-- <label>Font Size : </label>
+          <input type="range" min="12" max="35" value="15" class="slider" id="myRange"> -->
         </fieldset>
       </div>
       <div class="radio-toolbar">
@@ -355,13 +353,13 @@
             <label>
               <input type="radio" value="punjabi" name="translation" id="punjabi" /> Punjabi</label>
           </div>
-          <div>
+          <!-- <div>
             <label>
               <input type="radio" value="none" name="translation" id="none" /> none</label>
-          </div>
+          </div> -->
         </fieldset>
-        <label>Font Size :</label>
-        <input type="range" min="12" max="35" value="15" class="slider" id="myRange2">
+        <!-- <label>Font Size :</label>
+        <input type="range" min="12" max="35" value="15" class="slider" id="myRange2"> -->
       </div>
     </div>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
@@ -379,7 +377,7 @@
     <form action="index.html">
       <input type="number" class="form-control" id="page" name="page" placeholder="page no">
       <br>
-      <button type="button" class="btn" id="whatsapp" onclick="whatsAppShare()"> WhatsApp Share </button>
+      <button type="button" class="btn" id="whatsapp" onclick="window.open('whatsapp://send?text=' + getData())" disabled > WhatsApp Share </button>
     </form>
     <div id="demo" style="padding-left:2px;padding-right:5px"></div>
   </div>
