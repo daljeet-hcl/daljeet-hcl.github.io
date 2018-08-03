@@ -182,36 +182,47 @@
   //get data for sending on whatsApp
   function getData() {
     var firstSelectedLine = $($('input:checkbox').filter(':checked')[0]).val();
-    if (page != null) { 
+    if (page != null) {
       info.pageno = page;
       info.source = "Guru Granth Sahib";
       info.writer = responseData[firstSelectedLine].line.writer.english;
     }
-   
-    var url=window.location.href;
-    if(url.includes('#'))
-    {
-      url=url.slice(0,url.indexOf('#')); //remove # from url
+
+    var url = window.location.href;
+    if (url.includes('#')) {
+      url = url.slice(0, url.indexOf('#')); //remove # from url
     }
-    info.link=url +'#'+responseData[firstSelectedLine].line.id;
+    info.link = url + '#' + responseData[firstSelectedLine].line.id;
     var data = info.writer + " page " + info.pageno + " " + info.source;
+
+    var baniText = '';
+    var baniTranslation = '';
+    if (baniLanguage == "gurmukhi") {
+      baniText = "responseData[lineNo].line.gurmukhi.unicode";
+    } else {
+      baniText = "responseData[lineNo].line.transliteration.devanagari.text";
+    }
+    if (translationLanguage == "english") {
+      baniTranslation = "responseData[lineNo].line.translation.english.default";
+    } else {
+      baniTranslation = "responseData[lineNo].line.translation.punjabi.default.unicode";
+    }
+
     $('input:checkbox').filter(':checked').map(function () {
       var lineNo = $(this).val();
-      console.log("lineNo" + lineNo);
-      console.log(responseData[lineNo].line.transliteration.devanagari.text);
-      console.log(responseData[lineNo].line.translation.english.default);
-      data += '\n\r*' + responseData[lineNo].line.transliteration.devanagari.text + '*\n\r';
-      data += responseData[lineNo].line.translation.english.default+'\n';
+      data += '\n\r*' + eval(baniText) + '*\n\r';
+      data += eval(baniTranslation) + '\n';
+      console.log(eval(baniText));
     });
-    console.log(info.link);
-    data+= info.link;
+  
+    data += info.link;
     return encodeURI(data);
   }
 
   function drawContent(header, content, source) {
     $("#demo").html(header); //add header
-    var baniText;
-    var baniTranslation;
+    var baniText = '';
+    var baniTranslation = '';
     if (baniLanguage == "gurmukhi") {
       baniText = "line.line.gurmukhi.unicode";
     } else {
@@ -219,6 +230,9 @@
     }
     if (translationLanguage == "english") {
       baniTranslation = "line.line.translation.english.default";
+    } else {
+      if (translationLanguage == "punjabi")
+        baniTranslation = "line.line.translation.punjabi.default.unicode";
     }
     content.map((line, index) => {
       $("#demo").html($("#demo").html() + "<br/> <span class='bani' id='" + line.line.id +
