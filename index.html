@@ -127,11 +127,6 @@
     }
   }
 
-  function whatsAppShare() {
-    var url = "whatsapp://send?text=" + getData();
-    window.open(url);
-  }
-
   $(window).on("load", function () {
     pageID = getURLParameter("page");
     query = getURLParameter("query");
@@ -379,7 +374,7 @@
     <form action="index.html">
       <input type="number" class="form-control" id="page" name="page" placeholder="page no">
       <br>
-      <button type="button" class="btn" id="whatsapp" onclick="whatsAppShare()"> WhatsApp Share </button>
+      <button type="button" class="btn" id="whatsapp" onclick="window.open('whatsapp://send?text=' + getData())";> WhatsApp Share </button>
     </form>
     <div id="demo" style="padding-left:2px;padding-right:5px"></div>
   </div>
