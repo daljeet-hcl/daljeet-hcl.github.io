@@ -37,9 +37,7 @@
   input#query {
     width: 32ch;
   }
-</style>
-<!-- for top navigation-->
-<style>
+
   .topnav {
     overflow: hidden;
     background-color: rgb(12, 3, 32);
@@ -88,6 +86,7 @@
     font-size: 1.15em;
     /* 14px/16=0.875em */
   }
+
 </style>
 
 <script>
@@ -104,10 +103,13 @@
   if (baniLanguage == null) {
     baniLanguage = "devnagari";
   }
+   //select appropriate radio button in settings
+
   var translationLanguage = Cookies.get("translationLanguage");
   if (translationLanguage == null) {
     translationLanguage = "english";
   }
+   //select appropriate radio button in settings
 
   //for top navigation
   function myFunction() {
@@ -120,6 +122,8 @@
       pageType();
     } else {
       x.style.display = "block";
+      $('#'+baniLanguage).prop("checked", true); //select radio buttons as per cookies
+      $('#'+translationLanguage).prop("checked", true);
     }
   }
 
@@ -127,22 +131,6 @@
     var url = "whatsapp://send?text=" + getData();
     window.open(url);
   }
-
-  var settings = {
-    language: {
-      bani: {
-        gurmukhi: false,
-        devnagari: true,
-        both: false
-      },
-      translation: {
-        english: true,
-        punjabi: false,
-        spanish: false
-      }
-    },
-    larivaar: false
-  }; //contains language.bani, language.translation, larivaar= 
 
   $(window).on("load", function () {
     pageID = getURLParameter("page");
@@ -182,36 +170,47 @@
   //get data for sending on whatsApp
   function getData() {
     var firstSelectedLine = $($('input:checkbox').filter(':checked')[0]).val();
-    if (page != null) { 
+    if (page != null) {
       info.pageno = page;
       info.source = "Guru Granth Sahib";
       info.writer = responseData[firstSelectedLine].line.writer.english;
     }
-   
-    var url=window.location.href;
-    if(url.includes('#'))
-    {
-      url=url.slice(0,url.indexOf('#')); //remove # from url
+
+    var url = window.location.href;
+    if (url.includes('#')) {
+      url = url.slice(0, url.indexOf('#')); //remove # from url
     }
-    info.link=url +'#'+responseData[firstSelectedLine].line.id;
+    info.link = url + '#' + responseData[firstSelectedLine].line.id;
     var data = info.writer + " page " + info.pageno + " " + info.source;
+
+    var baniText = '';
+    var baniTranslation = '';
+    if (baniLanguage == "gurmukhi") {
+      baniText = "responseData[lineNo].line.gurmukhi.unicode";
+    } else {
+      baniText = "responseData[lineNo].line.transliteration.devanagari.text";
+    }
+    if (translationLanguage == "english") {
+      baniTranslation = "responseData[lineNo].line.translation.english.default";
+    } else {
+      baniTranslation = "responseData[lineNo].line.translation.punjabi.default.unicode";
+    }
+
     $('input:checkbox').filter(':checked').map(function () {
       var lineNo = $(this).val();
-      console.log("lineNo" + lineNo);
-      console.log(responseData[lineNo].line.transliteration.devanagari.text);
-      console.log(responseData[lineNo].line.translation.english.default);
-      data += '\n\r*' + responseData[lineNo].line.transliteration.devanagari.text + '*\n\r';
-      data += responseData[lineNo].line.translation.english.default+'\n';
+      data += '\n\r*' + eval(baniText) + '*\n\r';
+      data += eval(baniTranslation) + '\n';
+      console.log(eval(baniText));
     });
-    console.log(info.link);
-    data+= info.link;
+
+    data += info.link;
     return encodeURI(data);
   }
 
   function drawContent(header, content, source) {
     $("#demo").html(header); //add header
-    var baniText;
-    var baniTranslation;
+    var baniText = '';
+    var baniTranslation = '';
     if (baniLanguage == "gurmukhi") {
       baniText = "line.line.gurmukhi.unicode";
     } else {
@@ -219,6 +218,9 @@
     }
     if (translationLanguage == "english") {
       baniTranslation = "line.line.translation.english.default";
+    } else {
+      if (translationLanguage == "punjabi")
+        baniTranslation = "line.line.translation.punjabi.default.unicode";
     }
     content.map((line, index) => {
       $("#demo").html($("#demo").html() + "<br/> <span class='bani' id='" + line.line.id +
@@ -273,7 +275,7 @@
         console.log(response.shabadinfo.shabadid);
         var previous = shabadID - 1;
         var next = parseInt(shabadID) + 1;
-        var header = "<p/>    <b> " + info.source + "</b><br/><a href='?shabad=" + previous +
+        var header = "<p/><div id='bani-source'> <b style='margin-left: 40px;'>" + info.source + "</b><br/></div><a href='?shabad=" + previous +
           "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a> " +
           shabadinfo + "  <a href='?shabad=" + next +
           "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/>"
@@ -296,25 +298,18 @@
         $("#demo").html($("#demo").html() + "Result Count = " + response.count);
         $("#demo").html($("#demo").html() + "<br/>");
 
-        if (settings.language.bani.gurmukhi) {
-          response.shabads.map((x, index) => {
-            console.log(x);
-            $("#demo").html($("#demo").html() + "<br/> <b> <a href='?shabad=" + x.shabad.shabadid + "#" + x.shabad
-              .id + "'>" + x.shabad.gurmukhi.unicode + '</a> </b>');
-            $("#demo").html($("#demo").html() + "<br/><br/>" + x.shabad.source.english +
-              "   <b> <a href='?page=" + x.shabad.pageno + "#" + x.shabad.id + "'>" + x.shabad.pageno +
-              '</a><b>   ' + x.shabad.writer.english + "<br/>");
-          });
+        var baniText;
+        if (baniLanguage == "gurmukhi") {
+          baniText = "x.shabad.gurmukhi.unicode";
         } else {
-          response.shabads.map((x, index) => {
-            console.log(x);
-            $("#demo").html($("#demo").html() + "<br/> <b> <a href='?shabad=" + x.shabad.shabadid + "#" + x.shabad
-              .id + "'>" + x.shabad.transliteration.devanagari.text + '</a> </b>');
-            $("#demo").html($("#demo").html() + "<br/><br/>" + x.shabad.source.english +
-              "   <b> <a href='?page=" + x.shabad.pageno + "#" + x.shabad.id + "'>" + x.shabad.pageno +
-              '</a><b>   ' + x.shabad.writer.english + "<br/>");
-          });
-        }
+          baniText = "x.shabad.transliteration.devanagari.text";
+        } 
+        response.shabads.map((x, index) => {
+          console.log(x);
+          $("#demo").html($("#demo").html() + "<br/> <b> <a href='?shabad=" + x.shabad.shabadid + "#" + x.shabad.id + "'>" + eval(baniText) + '</a> </b><br/>' + x.shabad.source.english +
+            "   <b> <a href='?page=" + x.shabad.pageno + "#" + x.shabad.id + "'>" + x.shabad.pageno +
+            '</a><b>   ' + x.shabad.writer.english + "<br/>");
+        });
       }
     };
     xhttp.open("GET", "https://api.gurbaninow.com/v2/search/" + query, true);
@@ -336,11 +331,11 @@
           </legend>
           <div>
             <label>
-              <input type="radio" value="devnagari" name="bani-language" checked /> Devnagari</label>
+              <input type="radio" value="devnagari" name="bani-language" id="devnagari"/> Devnagari</label>
           </div>
           <div>
             <label>
-              <input type="radio" value="gurmukhi" name="bani-language" /> Gurmukhi
+              <input type="radio" value="gurmukhi" name="bani-language" id="gurmukhi"/> Gurmukhi
             </label>
           </div>
           <label>Font Size : </label>
@@ -354,19 +349,19 @@
           </legend>
           <div>
             <label>
-              <input type="radio" value="english" name="translation" checked/> English</label>
+              <input type="radio" value="english" name="translation" id="english" /> English</label>
           </div>
           <div>
             <label>
-              <input type="radio" value="punjabi" name="translation" /> Punjabi</label>
+              <input type="radio" value="punjabi" name="translation" id="punjabi" /> Punjabi</label>
           </div>
           <div>
             <label>
-              <input type="radio" value="none" name="translation" /> none</label>
+              <input type="radio" value="none" name="translation" id="none" /> none</label>
           </div>
         </fieldset>
         <label>Font Size :</label>
-        <input type="range" min="12" max="35" value="15" class="slider" id="myRange">
+        <input type="range" min="12" max="35" value="15" class="slider" id="myRange2">
       </div>
     </div>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
