@@ -181,13 +181,19 @@
 
   //get data for sending on whatsApp
   function getData() {
-    if (page != null) {
-      var firstSelectedLine = $($('input:checkbox').filter(':checked')[0]).val();
+    var firstSelectedLine = $($('input:checkbox').filter(':checked')[0]).val();
+    if (page != null) { 
       info.pageno = page;
       info.source = "Guru Granth Sahib";
       info.writer = responseData[firstSelectedLine].line.writer.english;
-      info.link=  'http://'+window.location.hostname+'/index.html?';
     }
+   
+    var url=window.location.href;
+    if(url.includes('#'))
+    {
+      url=url.slice(0,url.indexOf('#')); //remove # from url
+    }
+    info.link=url +'#'+responseData[firstSelectedLine].line.id;
     var data = info.writer + " page " + info.pageno + " " + info.source;
     $('input:checkbox').filter(':checked').map(function () {
       var lineNo = $(this).val();
@@ -196,8 +202,9 @@
       console.log(responseData[lineNo].line.translation.english.default);
       data += '\n\r*' + responseData[lineNo].line.transliteration.devanagari.text + '*\n\r';
       data += responseData[lineNo].line.translation.english.default+'\n';
-      
     });
+    console.log(info.link);
+    data+= info.link;
     return encodeURI(data);
   }
 
