@@ -31,11 +31,11 @@
 </head>
 <style>
   input#page {
-    width: 25%
+    width: 12ch;
   }
 
   input#query {
-    width: 75%
+    width: 35ch;
   }
 </style>
 <!-- for top navigation-->
@@ -92,7 +92,6 @@
 
 <script>
  
-
   var responseData; //this would be array
   var info = {}; //contains pageno, Source , writer 
   var page; //this represents the URL parameter on page
@@ -101,6 +100,15 @@
   var pageType; //whether shabad,query or page
   var shabadID; //shabad being displayed if any
   var page; // page being displayed
+
+  var baniLanguage = Cookies.get('baniLanguage');
+  if (baniLanguage == null) {
+    baniLanguage = "devnagari";
+  }
+  var translationLanguage = Cookies.get("translationLanguage");
+  if (translationLanguage == null) {
+    translationLanguage = "english";
+  }
 
  //for top navigation
  function myFunction() {
@@ -116,14 +124,7 @@
     }
   }
 
-  var baniLanguage = Cookies.get('baniLanguage');
-  if (baniLanguage == null) {
-    baniLanguage = "devnagari";
-  }
-  var translationLanguage = Cookies.get("translationLanguage");
-  if (translationLanguage == null) {
-    translationLanguage = "english";
-  }
+ 
 
   var settings = {
     language: {
