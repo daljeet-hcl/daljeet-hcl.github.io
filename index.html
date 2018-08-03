@@ -214,7 +214,7 @@
       data += eval(baniTranslation) + '\n';
       console.log(eval(baniText));
     });
-  
+
     data += info.link;
     return encodeURI(data);
   }
@@ -310,25 +310,18 @@
         $("#demo").html($("#demo").html() + "Result Count = " + response.count);
         $("#demo").html($("#demo").html() + "<br/>");
 
-        if (settings.language.bani.gurmukhi) {
-          response.shabads.map((x, index) => {
-            console.log(x);
-            $("#demo").html($("#demo").html() + "<br/> <b> <a href='?shabad=" + x.shabad.shabadid + "#" + x.shabad
-              .id + "'>" + x.shabad.gurmukhi.unicode + '</a> </b>');
-            $("#demo").html($("#demo").html() + "<br/><br/>" + x.shabad.source.english +
-              "   <b> <a href='?page=" + x.shabad.pageno + "#" + x.shabad.id + "'>" + x.shabad.pageno +
-              '</a><b>   ' + x.shabad.writer.english + "<br/>");
-          });
+        var baniText;
+        if (baniLanguage == "gurmukhi") {
+          baniText = "x.shabad.gurmukhi.unicode";
         } else {
-          response.shabads.map((x, index) => {
-            console.log(x);
-            $("#demo").html($("#demo").html() + "<br/> <b> <a href='?shabad=" + x.shabad.shabadid + "#" + x.shabad
-              .id + "'>" + x.shabad.transliteration.devanagari.text + '</a> </b>');
-            $("#demo").html($("#demo").html() + "<br/><br/>" + x.shabad.source.english +
-              "   <b> <a href='?page=" + x.shabad.pageno + "#" + x.shabad.id + "'>" + x.shabad.pageno +
-              '</a><b>   ' + x.shabad.writer.english + "<br/>");
-          });
-        }
+          baniText = "x.shabad.transliteration.devanagari.text";
+        } 
+        response.shabads.map((x, index) => {
+          console.log(x);
+          $("#demo").html($("#demo").html() + "<br/> <b> <a href='?shabad=" + x.shabad.shabadid + "#" + x.shabad.id + "'>" + eval(baniText) + '</a> </b><br/>' + x.shabad.source.english +
+            "   <b> <a href='?page=" + x.shabad.pageno + "#" + x.shabad.id + "'>" + x.shabad.pageno +
+            '</a><b>   ' + x.shabad.writer.english + "<br/>");
+        });
       }
     };
     xhttp.open("GET", "https://api.gurbaninow.com/v2/search/" + query, true);
