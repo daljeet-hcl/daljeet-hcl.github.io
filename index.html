@@ -91,7 +91,6 @@
 </style>
 
 <script>
- 
   var responseData; //this would be array
   var info = {}; //contains pageno, Source , writer 
   var page; //this represents the URL parameter on page
@@ -110,8 +109,8 @@
     translationLanguage = "english";
   }
 
- //for top navigation
- function myFunction() {
+  //for top navigation
+  function myFunction() {
     var x = document.getElementById("myLinks");
     if (x.style.display === "block") {
       x.style.display = "none";
@@ -124,7 +123,10 @@
     }
   }
 
- 
+  function whatsAppShare() {
+    var url = "whatsapp://send?text=" + getData();
+    window.open(url);
+  }
 
   var settings = {
     language: {
@@ -175,10 +177,7 @@
     }
   }
 
-  $("#copy").click(function () {
-    var url = "whatsapp://send?text=" + getData();
-    window.open(url);
-  });
+
 
   //get data for sending on whatsApp
   function getData() {
@@ -200,7 +199,7 @@
     return encodeURI(data);
   }
 
-  function drawContent(header, content,source) {
+  function drawContent(header, content, source) {
     $("#demo").html(header); //add header
     var baniText;
     var baniTranslation;
@@ -214,7 +213,8 @@
     }
     content.map((line, index) => {
       $("#demo").html($("#demo").html() + "<br/> <span class='bani' id='" + line.line.id +
-        "'><label> <input type='checkbox' value=" + index + '><b>' + eval(baniText) + '</b> </label> <br/> </span>' +
+        "'><label> <input type='checkbox' value=" + index + '><b>' + eval(baniText) +
+        '</b> </label> <br/> </span>' +
         eval(baniTranslation) + "<br/>");
     });
 
@@ -264,11 +264,11 @@
         console.log(response.shabadinfo.shabadid);
         var previous = shabadID - 1;
         var next = parseInt(shabadID) + 1;
-        var header = "<p/>    <b> "+ info.source + "</b><br/><a href='?shabad=" + previous +
+        var header = "<p/>    <b> " + info.source + "</b><br/><a href='?shabad=" + previous +
           "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a> " +
           shabadinfo + "  <a href='?shabad=" + next +
           "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/>"
-          
+
         drawContent(header, response.shabad);
       }
     };
@@ -326,11 +326,13 @@
             <label>Gurubani Text</label>
           </legend>
           <div>
-              <label><input type="radio" value="devnagari" name="bani-language" checked /> Devnagari</label>
+            <label>
+              <input type="radio" value="devnagari" name="bani-language" checked /> Devnagari</label>
           </div>
           <div>
-            <label><input type="radio" value="gurmukhi" name="bani-language" />
-             Gurmukhi</label>
+            <label>
+              <input type="radio" value="gurmukhi" name="bani-language" /> Gurmukhi
+            </label>
           </div>
           <label>Font Size : </label>
           <input type="range" min="12" max="35" value="15" class="slider" id="myRange">
@@ -342,16 +344,19 @@
             <label>Translation</label>
           </legend>
           <div>
-              <label><input type="radio" value="english" name="translation" checked/> English</label>
+            <label>
+              <input type="radio" value="english" name="translation" checked/> English</label>
           </div>
           <div>
-              <label><input type="radio" value="punjabi" name="translation" /> Punjabi</label>
+            <label>
+              <input type="radio" value="punjabi" name="translation" /> Punjabi</label>
           </div>
           <div>
-              <label><input type="radio" value="none" name="translation" /> none</label>
+            <label>
+              <input type="radio" value="none" name="translation" /> none</label>
           </div>
         </fieldset>
-          <label>Font Size :</label>     
+        <label>Font Size :</label>
         <input type="range" min="12" max="35" value="15" class="slider" id="myRange">
       </div>
     </div>
@@ -364,18 +369,15 @@
   <br>
   <div class="form-group" id="content" style="padding-left:5px">
     <form action="index.html">
-      <input type="text" class="form-control" id="query" name="query" placeholder="गदब / ਗਦਬ / gdb for गगन दमामा बाजिओ"/>
+      <input type="text" class="form-control" id="query" name="query" placeholder="गदब / ਗਦਬ / gdb for गगन दमामा बाजिओ" />
       <br>
-      <button type="submit" class="btn">First Letter </button>
     </form>
     <form action="index.html">
-      <br/>
-      <input type="number" class="form-control" id="page" name="page" placeholder="page no" >
+      <input type="number" class="form-control" id="page" name="page" placeholder="page no">
       <br>
-      <button type="submit" class="btn">Load Page</button>
-      <button type="button" class="btn" id="copy"> WhatsApp Share </button>
+      <button type="button" class="btn" id="whatsapp" onclick="whatsAppShare()"> WhatsApp Share </button>
     </form>
-    <div id="demo" style="padding-left:2px"></div>
+    <div id="demo" style="padding-left:2px;padding-right:5px"></div>
   </div>
 </body>
 
