@@ -163,8 +163,8 @@
   //get data for sending on whatsApp
   function getData() {
     var firstSelectedLine = $($('input:checkbox').filter(':checked')[0]).val();
-    if (page != null) {
-      info.pageno = page;
+    if (pageID != null) {
+      info.pageno = pageID;
       info.source = "Guru Granth Sahib";
       info.writer = responseData[firstSelectedLine].line.writer.english;
     }
@@ -331,8 +331,8 @@
               <input type="radio" value="gurmukhi" name="bani-language" id="gurmukhi"/> Gurmukhi
             </label>
           </div>
-          <label>Font Size : </label>
-          <input type="range" min="12" max="35" value="15" class="slider" id="myRange">
+          <!-- <label>Font Size : </label>
+          <input type="range" min="12" max="35" value="15" class="slider" id="myRange"> -->
         </fieldset>
       </div>
       <div class="radio-toolbar">
@@ -348,13 +348,13 @@
             <label>
               <input type="radio" value="punjabi" name="translation" id="punjabi" /> Punjabi</label>
           </div>
-          <div>
+          <!-- <div>
             <label>
               <input type="radio" value="none" name="translation" id="none" /> none</label>
-          </div>
+          </div> -->
         </fieldset>
-        <label>Font Size :</label>
-        <input type="range" min="12" max="35" value="15" class="slider" id="myRange2">
+        <!-- <label>Font Size :</label>
+        <input type="range" min="12" max="35" value="15" class="slider" id="myRange2"> -->
       </div>
     </div>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
