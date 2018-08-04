@@ -17,6 +17,7 @@
 
   //for top navigation
   function showHideSettings() {
+    document.getElementById("searchBar").style.display = "none";
       var x = document.getElementById("myLinks");
       if (x.style.display === "block") {
           x.style.display = "none";
@@ -34,6 +35,7 @@
   }
 
   function showHideSearchBar() {
+      document.getElementById("myLinks").style.display = "none";
       var x = document.getElementById("searchBar");
       if (x.style.display === "block") {
           x.style.display = "none";
@@ -41,6 +43,11 @@
           x.style.display = "block";
       }
   }
+
+  function hideMenu() {
+    document.getElementById("myLinks").style.display = "none";
+    document.getElementById("searchBar").style.display = "none";
+}
 
   $(window).on("load", function () {
       pageID = getURLParameter("page");
