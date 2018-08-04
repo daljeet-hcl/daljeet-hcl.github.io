@@ -52,7 +52,7 @@
     background-color: #555; /* Dark-grey background */
     overflow: hidden; /* Overflow due to float */
     transition: top 0.3s; /* Transition effect when sliding down (and up) */
-    display: block;
+    display: none;
 }
 
 .icon-bar a {
@@ -77,14 +77,15 @@ body {margin:0;}
 }
 
 #buffer {
-  background-color: red;
-  height: 60px;
+  background-color: #555;
+  height: 46px;
 }
 
 #searchBar {
   display: none;
   background-color: rgb(12, 3, 32);
   width: 100%;
+  padding: 14px 16px;
 }
 
  #myLinks {
