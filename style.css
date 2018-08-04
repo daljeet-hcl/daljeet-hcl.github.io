@@ -6,6 +6,11 @@
     width: 32ch;
   }
 
+  #searchBar {
+    display: none;
+    background-color: rgb(12, 3, 32);
+  }
+
   .topnav #myLinks {
     display: none;
     background-color: rgb(12, 3, 32);

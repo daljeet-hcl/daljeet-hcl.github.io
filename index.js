@@ -33,6 +33,15 @@
       }
   }
 
+  function showHideSearchBar() {
+      var x = document.getElementById("searchBar");
+      if (x.style.display === "block") {
+          x.style.display = "none";
+      } else {
+          x.style.display = "block";
+      }
+  }
+
   $(window).on("load", function () {
       pageID = getURLParameter("page");
       query = getURLParameter("query");

@@ -41,7 +41,7 @@
     <a class="active" href="#">
       <i class="fa fa-home"></i>
     </a>
-    <a href="#">
+    <a href="#" onclick="showHideSearchBar()">
       <i class="fa fa-search"></i>
     </a>
     <a href="#">
@@ -56,6 +56,7 @@
   </div>
   <!-- end navigation bar-->
 
+  <!-- settings bar -->
   <div class="topnav">
     <div id="myLinks">
       <div class="radio-toolbar">
@@ -92,9 +93,10 @@
     </div>
   </div>
 
-
   <br>
-  <div class="form-group" id="content" style="padding-left:5px">
+
+  <!-- search bar -->
+  <div class="form-group,topnav" id="searchBar" style="padding-left:5px">
     <form action="index.html">
       <input type="text" class="form-control" id="query" name="query" placeholder="गदब / ਗਦਬ for गगन दमामा बाजिओ" />
       <br>
@@ -104,8 +106,10 @@
       <br>
       <button type="button" class="btn" id="whatsapp" onclick="window.open('whatsapp://send?text=' + getData())" disabled> WhatsApp Share </button>
     </form>
-    <div id="demo" style="padding-left:2px;padding-right:5px"></div>
   </div>
-</body>
 
+  <!-- main content Area -->
+  <div id="demo" style="padding-left:5px;padding-right:5px"></div>
+  
+</body>
 </html>
