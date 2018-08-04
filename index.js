@@ -153,7 +153,7 @@
           element.style.backgroundColor = 'Highlight';
           element.style.color = 'HighlightText';
       } else {
-          document.getElementById(content[0].line.id).scrollIntoView(); //scrol into first element
+        //  document.getElementById(content[0].line.id).scrollIntoView(); //scrol into first element
       }
 
       var checkboxes = $("input[type='checkbox']");
