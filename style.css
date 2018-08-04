@@ -72,19 +72,23 @@
 body {margin:0;}
 /* Main content */
 #demo {
-  margin-top: 70px; /* Add a top margin to avoid content overlay */
+   /* Add a top margin to avoid content overlay */
+  background-color: antiquewhite;
+}
+
+#buffer {
+  background-color: red;
+  height: 60px;
 }
 
 #searchBar {
-  position: fixed;
   display: none;
   background-color: rgb(12, 3, 32);
   width: 100%;
 }
 
-.topnav #myLinks {
+ #myLinks {
   display: none;
   background-color: rgb(12, 3, 32);
-  position: fixed;
   width: 100%;
 }

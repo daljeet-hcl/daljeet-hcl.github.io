@@ -17,7 +17,7 @@
   <!-- cookies plugin for jquery -->
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
   <!-- this projects script -->
-  <script src="./index.js"  Cache-Control: no-cache></script>
+  <script src="./index.js" Cache-Control: no-cache></script>
   <script>
     $(document).ready(function () {
       $('body').bootstrapMaterialDesign();
@@ -38,16 +38,16 @@
 <body>
   <!-- Top Navigation Menu -->
   <div class="icon-bar" id="icon-bar">
-    <a class="active" href="#" onclick="hideMenu()" >
+    <a class="active" href="#" onclick="hideMenu()">
       <i class="fa fa-home"></i>
     </a>
     <a href="#" onclick="showHideSearchBar()">
       <i class="fa fa-search"></i>
     </a>
-    <a href="#" id="whatsapp" onclick="window.open('whatsapp://send?text=' + getData())" disabled >
+    <a href="#" id="whatsapp" onclick="window.open('whatsapp://send?text=' + getData())" disabled>
       <i class="fa fa-envelope"></i>
     </a>
-    <a href="#" onclick="hideMenu()" >
+    <a href="#" onclick="hideMenu()">
       <i class="fa fa-trash"></i>
     </a>
     <a href="javascript:void(0);" class="icon" onclick="showHideSettings()">
@@ -56,9 +56,13 @@
   </div>
   <!-- end navigation bar-->
 
+  <div id="buffer">
+  </div>
+
   <!-- settings bar -->
   <div class="topnav">
     <div id="myLinks">
+      <br>
       <div class="radio-toolbar">
         <fieldset>
           <legend>
@@ -91,23 +95,25 @@
         </fieldset>
       </div>
     </div>
-  </div>
-  <!-- search bar -->
-  <div class="form-group,topnav" id="searchBar" style="padding-left:5px">
-    <br/>
-    <form action="index.html">
-      <input type="text" class="form-control" id="query" name="query" placeholder="गदब / ਗਦਬ for गगन दमामा बाजिओ" />
+
+    <!-- search bar -->
+
+    <div class="form-group" id="searchBar">
       <br>
-    </form>
-    <form action="index.html">
-      <input type="number" class="form-control" id="page" name="page" placeholder="1 - 1429">
-      <br>
-      <!-- <button type="button" class="btn" id="whatsapp2" onclick="window.open('whatsapp://send?text=' + getData())" disabled> WhatsApp Share </button> -->
-    </form>
+      <form action="index.html">
+        <input type="text" class="form-control" id="query" name="query" placeholder="गदब / ਗਦਬ for गगन दमामा बाजिओ" />
+        <br>
+      </form>
+      <form action="index.html">
+        <input type="number" class="form-control" id="page" name="page" placeholder="1 - 1429">
+        <br>
+        <!-- <button type="button" class="btn" id="whatsapp2" onclick="window.open('whatsapp://send?text=' + getData())" disabled> WhatsApp Share </button> -->
+      </form>
+    </div>
   </div>
 
   <!-- main content Area -->
-  <div id="demo" style="padding-left:5px;padding-right:5px" onclick="hideMenu()" ></div>
-  
+    <div id="demo" style="padding-left:5px;padding-right:5px" onclick="hideMenu()"></div>
 </body>
+
 </html>
