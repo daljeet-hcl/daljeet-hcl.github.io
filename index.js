@@ -17,7 +17,7 @@
 
   //for top navigation
   function showHideSettings() {
-    document.getElementById("searchBar").style.display = "none";
+      document.getElementById("searchBar").style.display = "none";
       var x = document.getElementById("myLinks");
       if (x.style.display === "block") {
           x.style.display = "none";
@@ -45,9 +45,9 @@
   }
 
   function hideMenu() {
-    document.getElementById("myLinks").style.display = "none";
-    document.getElementById("searchBar").style.display = "none";
-}
+      document.getElementById("myLinks").style.display = "none";
+      document.getElementById("searchBar").style.display = "none";
+  }
 
   $(window).on("load", function () {
       pageID = getURLParameter("page");
@@ -252,4 +252,16 @@
       }
       xhttp.open("GET", url, true);
       xhttp.send();
+  }
+
+  var prevScrollpos = window.pageYOffset;
+  window.onscroll = function () {
+    hideMenu();
+    var currentScrollPos = window.pageYOffset;
+      if (prevScrollpos > currentScrollPos) {
+          document.getElementById("icon-bar").style.top = "0";
+      } else {
+          document.getElementById("icon-bar").style.top = "-40px";
+      }
+      prevScrollpos = currentScrollPos;
   }
