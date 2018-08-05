@@ -52,7 +52,7 @@
     background-color: #555; /* Dark-grey background */
     overflow: hidden; /* Overflow due to float */
     transition: top 0.3s; /* Transition effect when sliding down (and up) */
-    display: none;
+    display: block;
 }
 
 .icon-bar a {
@@ -73,7 +73,7 @@ body {margin:0;}
 /* Main content */
 #demo {
    /* Add a top margin to avoid content overlay */
-  background-color: antiquewhite;
+  background-color: white;
 }
 
 #buffer {

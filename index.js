@@ -17,20 +17,27 @@
 
   //for top navigation
   function showHideSettings() {
-      document.getElementById("searchBar").style.display = "none";
+      document.getElementById("searchBar").style.display = "none"; //hide search bar 
       var x = document.getElementById("myLinks");
+      if (x.style.display === "block") {
+          hideSettings(x);
+      } else {
+          x.style.display = "block";
+          $('#' + baniLanguage).prop("checked", true); //select radio buttons as per cookies
+          $('#' + translationLanguage).prop("checked", true);
+      }
+  }
+
+  function hideSettings(x) {
       if (x.style.display === "block") {
           x.style.display = "none";
           baniLanguage = $("input[name='bani-language']:checked").val();
           translationLanguage = $("input[name='translation']:checked").val();
           Cookies.set("baniLanguage", baniLanguage);
+          Cookies.set("translationLanguage",translationLanguage);
           if (pageType) {
               pageType();
           }
-      } else {
-          x.style.display = "block";
-          $('#' + baniLanguage).prop("checked", true); //select radio buttons as per cookies
-          $('#' + translationLanguage).prop("checked", true);
       }
   }
 
@@ -45,7 +52,7 @@
   }
 
   function hideMenu() {
-      document.getElementById("myLinks").style.display = "none";
+      hideSettings(document.getElementById("myLinks"));
       document.getElementById("searchBar").style.display = "none";
   }
 
@@ -153,7 +160,7 @@
           element.style.backgroundColor = 'Highlight';
           element.style.color = 'HighlightText';
       } else {
-        //  document.getElementById(content[0].line.id).scrollIntoView(); //scrol into first element
+          //  document.getElementById(content[0].line.id).scrollIntoView(); //scrol into first element
       }
 
       var checkboxes = $("input[type='checkbox']");
@@ -256,8 +263,8 @@
 
   var prevScrollpos = window.pageYOffset;
   window.onscroll = function () {
-    hideMenu();
-    var currentScrollPos = window.pageYOffset;
+      hideMenu();
+      var currentScrollPos = window.pageYOffset;
       if (prevScrollpos > currentScrollPos) {
           document.getElementById("icon-bar").style.top = "0";
       } else {
