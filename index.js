@@ -262,6 +262,11 @@
       xhttp.open("GET", url, true);
       xhttp.send();
   }
+
+  window.onscroll = function () {
+    hideMenu();
+  }
+  
 /*
   var prevScrollpos = window.pageYOffset;
   window.onscroll = function () {
