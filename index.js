@@ -22,6 +22,7 @@
       if (x.style.display === "block") {
           hideSettings(x);
       } else {
+          window.scrollTo(0,0);
           x.style.display = "block";
           $('#' + baniLanguage).prop("checked", true); //select radio buttons as per cookies
           $('#' + translationLanguage).prop("checked", true);
@@ -47,6 +48,7 @@
       if (x.style.display === "block") {
           x.style.display = "none";
       } else {
+          window.scrollTo(0,0);
           x.style.display = "block";
       }
   }
@@ -260,7 +262,7 @@
       xhttp.open("GET", url, true);
       xhttp.send();
   }
-
+/*
   var prevScrollpos = window.pageYOffset;
   window.onscroll = function () {
       hideMenu();
@@ -272,3 +274,4 @@
       }
       prevScrollpos = currentScrollPos;
   }
+  */
