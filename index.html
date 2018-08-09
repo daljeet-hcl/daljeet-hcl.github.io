@@ -9,21 +9,12 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <!--material design libraries-->
-  <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
-    crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
-    crossorigin="anonymous"></script>
+
   <!-- cookies plugin for jquery -->
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
   <!-- this projects script -->
   <script src="./index.js" Cache-Control: no-cache></script>
-  <script>
-    $(document).ready(function () {
-      $('body').bootstrapMaterialDesign();
-    });
-  </script>
-
+  
   <!-- basic stylesheet for this project-->
   <link rel="stylesheet" href="./style.css" />
   <!-- for top navigation-->
@@ -84,7 +75,7 @@
         <label>Page No</label>
       </legend>
       <form action="index.html">
-        <input type="number" class="form-control" id="page" name="page" placeholder="1 - 1429">
+        <input type="number" class="form-control"  name="page" placeholder="1 - 1429">
         <br>
         <button type="submit" class="btn">Load Page</button>
         <!-- <button type="button" class="btn" id="whatsapp2" onclick="window.open('whatsapp://send?text=' + getData())" disabled> WhatsApp Share </button> -->
