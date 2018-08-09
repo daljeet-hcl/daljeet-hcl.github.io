@@ -36,30 +36,10 @@
 </style>
 
 <body>
-  <!-- Top Navigation Menu -->
-  <div class="icon-bar" id="icon-bar">
-    <a class="active" href="#" onclick="hideMenu()">
-      <i class="fa fa-book"></i>
-    </a>
-    <a href="#" onclick="showHideSearchBar()">
-      <i class="fa fa-search"></i>
-    </a>
-    <a href="#" id="whatsapp" onclick="shareBani()" disabled>
-      <i class="fa fa-whatsapp"></i>
-    </a>
-    <a href="#" onclick="hideMenu('refresh')">
-      <i class="fa fa-refresh"></i>
-    </a>
-    <a href="javascript:void(0);" class="icon" onclick="showHideSettings()">
-      <i class="fa fa-bars"></i>
-    </a>
-  </div>
-  <!-- end navigation bar-->
+ 
 
   <!-- settings bar -->
-  <div class="topnav">
-    <div id="myLinks">
-      <div class="radio-toolbar">
+  <div id="mySidenav" class="sidenav radio-toolbar">    
         <fieldset>
           <legend>
             <label>Gurubani Text</label>
@@ -73,9 +53,7 @@
               <input type="radio" value="gurmukhi" name="bani-language" id="gurmukhi" /> Gurmukhi
             </label>
           </div>
-        </fieldset>
-      </div>
-      <div class="radio-toolbar">
+        </fieldset>    
         <fieldset>
           <legend>
             <label>Translation</label>
@@ -89,12 +67,10 @@
               <input type="radio" value="punjabi" name="translation" id="punjabi" /> Punjabi</label>
           </div>
         </fieldset>
-      </div>
     </div>
 
     <!-- search bar -->
-
-    <div class="form-group" id="searchBar">
+   <div  id="mySidenav2"  class="sidenav form-group" >
       <form action="index.html">
         <input type="text" class="form-control" id="query" name="query" placeholder="गदब / ਗਦਬ for गगन दमामा बाजिओ" /> 
         <br>
@@ -107,11 +83,32 @@
         <button type="submit" class="btn">Load Page</button>
         <!-- <button type="button" class="btn" id="whatsapp2" onclick="window.open('whatsapp://send?text=' + getData())" disabled> WhatsApp Share </button> -->
       </form>
-    </div>
   </div>
 
-  <!-- main content Area -->
-    <div id="demo" style="padding-left:5px;padding-right:5px" onclick="hideMenu()"></div>
+    <!-- Top Navigation Menu -->
+  <div id="main"  >
+    <div class="icon-bar" id="icon-bar">
+      <a class="active" href="#" onclick="closeNav()">
+        <i class="fa fa-book"></i>
+      </a>
+      <a href="#" onclick="showSearchBar()">
+        <i class="fa fa-search"></i>
+      </a>
+      <a href="#" id="whatsapp" onclick="shareBani()" disabled>
+        <i class="fa fa-whatsapp"></i>
+      </a>
+      <a href="#" onclick="refresh()">
+        <i class="fa fa-refresh"></i>
+      </a>
+      <a href="javascript:void(0);" class="icon" onclick="showSettings()">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+    <!-- end navigation bar-->
+
+  <!-- main content Area inside div Id= main -->
+    <div id="demo" style="padding-left:5px;padding-right:5px" onclick="closeNav()"></div>
+  </div>  
 </body>
 
 </html>
