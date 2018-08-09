@@ -69,12 +69,12 @@
       pageID = getURLParameter("page");
       query = getURLParameter("query");
       if (query != null) {
-          $("#query").val(query);
+         // $("#query").val(query);
           pageType = loadQueryResult;
           loadQueryResult();
       } else {
           if (pageID != null) {
-              $("#page").val(pageID);
+           //   $("#page").val(pageID);
               pageType = loadPageAng;
               loadPageAng();
           } else {
