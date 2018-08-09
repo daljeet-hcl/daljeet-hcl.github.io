@@ -16,46 +16,52 @@
   }
 
   //for top navigation
-  function showHideSettings() {
-      document.getElementById("searchBar").style.display = "none"; //hide search bar 
-      var x = document.getElementById("myLinks");
-      if (x.style.display === "block") {
-          hideSettings(x);
-      } else {
-          window.scrollTo(0,0);
-          x.style.display = "block";
-          $('#' + baniLanguage).prop("checked", true); //select radio buttons as per cookies
-          $('#' + translationLanguage).prop("checked", true);
+  /* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
+  function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+     // document.getElementById("main").style.marginLeft = "250px";
+      document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+  }
+
+  /* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+  function closeNav() {
+      if (document.getElementById("mySidenav").style.width !="0") {
+          applySettings();
+      }
+      document.getElementById("mySidenav2").style.width = "0";
+      document.getElementById("mySidenav").style.width = "0";
+      document.getElementById("main").style.marginLeft = "0";
+      document.body.style.backgroundColor = "white";
+  }
+
+  function showSettings() {
+      document.getElementById("mySidenav").style.width = "250px";
+   //   document.getElementById("main").style.marginLeft = "250px";
+      document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+      $('#' + baniLanguage).prop("checked", true); //select radio buttons as per cookies
+      $('#' + translationLanguage).prop("checked", true);
+  }
+
+  function applySettings() {
+      baniLanguage = $("input[name='bani-language']:checked").val();
+      translationLanguage = $("input[name='translation']:checked").val();
+      Cookies.set("baniLanguage", baniLanguage);
+      Cookies.set("translationLanguage", translationLanguage);
+      if (pageType) {
+          pageType();
       }
   }
 
-  function hideSettings(x) {
-      if (x.style.display === "block") {
-          x.style.display = "none";
-          baniLanguage = $("input[name='bani-language']:checked").val();
-          translationLanguage = $("input[name='translation']:checked").val();
-          Cookies.set("baniLanguage", baniLanguage);
-          Cookies.set("translationLanguage",translationLanguage);
-          if (pageType) {
-              pageType();
-          }
-      }
+  function showSearchBar() {
+      document.getElementById("mySidenav2").style.width = "260px";
+     // document.getElementById("main").style.marginLeft = "250px";
+      document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
   }
 
-  function showHideSearchBar() {
-      document.getElementById("myLinks").style.display = "none";
-      var x = document.getElementById("searchBar");
-      if (x.style.display === "block") {
-          x.style.display = "none";
-      } else {
-          window.scrollTo(0,0);
-          x.style.display = "block";
-      }
-  }
 
-  function hideMenu() {
-      hideSettings(document.getElementById("myLinks"));
-      document.getElementById("searchBar").style.display = "none";
+
+  function refresh() {
+      $("input:checkbox").prop('checked', false); //uncheck all checkboxes   
   }
 
   $(window).on("load", function () {
@@ -94,8 +100,12 @@
 
 
   //get data for sending on whatsApp
-  function getData() {
+  function shareBani() {
       var firstSelectedLine = $($('input:checkbox').filter(':checked')[0]).val();
+      if (!firstSelectedLine) {
+          alert("first select some bani lines using checkbox");
+          return;
+      }
       if (pageID != null) {
           info.pageno = pageID;
           info.source = "Guru Granth Sahib";
@@ -130,7 +140,7 @@
       });
 
       data += info.link;
-      return encodeURI(data);
+      window.open('whatsapp://send?text=' + encodeURI(data));
   }
 
   function drawContent(header, content, source) {
@@ -263,14 +273,10 @@
       xhttp.send();
   }
 
-  window.onscroll = function () {
-    hideMenu();
-  }
-  
-/*
+
   var prevScrollpos = window.pageYOffset;
   window.onscroll = function () {
-      hideMenu();
+       closeNav();
       var currentScrollPos = window.pageYOffset;
       if (prevScrollpos > currentScrollPos) {
           document.getElementById("icon-bar").style.top = "0";
@@ -279,4 +285,3 @@
       }
       prevScrollpos = currentScrollPos;
   }
-  */
