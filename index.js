@@ -19,13 +19,13 @@
   /* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
   function openNav() {
       document.getElementById("mySidenav").style.width = "250px";
-      document.getElementById("main").style.marginLeft = "250px";
+     // document.getElementById("main").style.marginLeft = "250px";
       document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
   }
 
   /* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
   function closeNav() {
-      if (document.getElementById("mySidenav").style.width == "250px") {
+      if (document.getElementById("mySidenav").style.width !="0") {
           applySettings();
       }
       document.getElementById("mySidenav2").style.width = "0";
@@ -35,9 +35,8 @@
   }
 
   function showSettings() {
-      // document.getElementById("searchBar").style.display = "none"; //hide search bar 
       document.getElementById("mySidenav").style.width = "250px";
-      document.getElementById("main").style.marginLeft = "250px";
+   //   document.getElementById("main").style.marginLeft = "250px";
       document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
       $('#' + baniLanguage).prop("checked", true); //select radio buttons as per cookies
       $('#' + translationLanguage).prop("checked", true);
@@ -54,8 +53,8 @@
   }
 
   function showSearchBar() {
-      document.getElementById("mySidenav2").style.width = "250px";
-      document.getElementById("main").style.marginLeft = "250px";
+      document.getElementById("mySidenav2").style.width = "260px";
+     // document.getElementById("main").style.marginLeft = "250px";
       document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
   }
 

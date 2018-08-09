@@ -70,13 +70,19 @@
     </div>
 
     <!-- search bar -->
-   <div  id="mySidenav2"  class="sidenav form-group" >
-      <form action="index.html">
+   <div  id="mySidenav2"  class="sidenav form-group radio-toolbar" >
+    <legend>
+      <label>First letter search</label>
+    </legend>      
+        <form action="index.html">
         <input type="text" class="form-control" id="query" name="query" placeholder="गदब / ਗਦਬ for गगन दमामा बाजिओ" /> 
         <br>
         <button type="submit" class="btn">Search</button>
       </form>
       <br>
+      <legend>
+        <label>Page No</label>
+      </legend>
       <form action="index.html">
         <input type="number" class="form-control" id="page" name="page" placeholder="1 - 1429">
         <br>
@@ -88,16 +94,16 @@
     <!-- Top Navigation Menu -->
   <div id="main"  >
     <div class="icon-bar" id="icon-bar">
-      <a class="active" href="#" onclick="closeNav()">
+      <a class="active" href="javascript:void(0);" onclick="closeNav()">
         <i class="fa fa-book"></i>
       </a>
-      <a href="#" onclick="showSearchBar()">
+      <a href="javascript:void(0);" onclick="showSearchBar()">
         <i class="fa fa-search"></i>
       </a>
-      <a href="#" id="whatsapp" onclick="shareBani()" disabled>
+      <a href="javascript:void(0);" id="whatsapp" onclick="shareBani()" disabled>
         <i class="fa fa-whatsapp"></i>
       </a>
-      <a href="#" onclick="refresh()">
+      <a href="javascript:void(0);" onclick="refresh()">
         <i class="fa fa-refresh"></i>
       </a>
       <a href="javascript:void(0);" class="icon" onclick="showSettings()">
