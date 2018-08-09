@@ -94,8 +94,13 @@
 
 
   //get data for sending on whatsApp
-  function getData() {
+  function shareBani() {
       var firstSelectedLine = $($('input:checkbox').filter(':checked')[0]).val();
+      if(!firstSelectedLine)
+      {
+          alert("first select some bani lines using checkbox");
+          return;
+      }
       if (pageID != null) {
           info.pageno = pageID;
           info.source = "Guru Granth Sahib";
@@ -130,7 +135,7 @@
       });
 
       data += info.link;
-      return encodeURI(data);
+      window.open('whatsapp://send?text=' + encodeURI(data));
   }
 
   function drawContent(header, content, source) {
