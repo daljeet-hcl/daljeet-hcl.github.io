@@ -6,12 +6,13 @@
   var pageID; // page being displayed
 
   var baniLanguage = Cookies.get('baniLanguage');
-  if (baniLanguage == null) {
+  if (baniLanguage != "gurmukhi") {
       baniLanguage = "devnagari";
   }
 
   var translationLanguage = Cookies.get("translationLanguage");
-  if (translationLanguage == null) {
+
+  if (translationLanguage != "punjabi") {
       translationLanguage = "english";
   }
 
@@ -25,7 +26,7 @@
 
   /* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
   function closeNav() {
-      if (document.getElementById("mySidenav").style.width !="0") {
+      if (document.getElementById("mySidenav").style.width =="250") {
           applySettings();
       }
       document.getElementById("mySidenav2").style.width = "0";
