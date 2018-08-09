@@ -192,10 +192,7 @@
               console.log(response.pageno);
               var previous = pageID - 1
               var next = parseInt(pageID) + 1;
-              var header = "<div id='pageheader'><p/><a href='?page=" + previous +
-                  "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a>  Page No = " +
-                  response.pageno + "  <a href='?page=" + next +
-                  "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/></div>";
+              var header = "<div id='pageheader'><p/><a href='?page="+previous +"'> <i class='fa fa-arrow-left' style='font-size:24px'></i> </a>  Page No = " + response.pageno + "  <a href='?page=" + next +"'<i class='fa fa-arrow-right' style='font-size:24px'></i> </a><br/></div>";
               drawContent(header, response.page);
           }
       };
@@ -218,11 +215,8 @@
               console.log(response.shabadinfo.shabadid);
               var previous = shabadID - 1;
               var next = parseInt(shabadID) + 1;
-              var header = "<div id='pageheader'><p/><div id='bani-source'> <b style='margin-left: 40px;'>" + info.source +
-                  "</b><br/></div><a href='?shabad=" + previous +
-                  "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a> " +
-                  shabadinfo + "  <a href='?shabad=" + next +
-                  "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/></div>";
+              var header = "<div id='pageheader'><p/><div id='bani-source'> <b style='margin-left: 40px;'>" + info.source + "</b><br/></div><a href='?shabad=" + previous + "'><i class='fa fa-arrow-left' style='font-size:24px'></i>  </a> " +shabadinfo + "  <a href='?shabad=" + next +
+                  "'><i class='fa fa-arrow-right' style='font-size:24px'></i></a><br/></div>";
 
               drawContent(header, response.shabad);
           }
