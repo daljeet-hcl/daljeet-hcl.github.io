@@ -53,7 +53,10 @@
       }
   }
 
-  function hideMenu() {
+  function hideMenu(source) {
+      if(source=="refresh"){ 
+       $("input:checkbox").prop('checked',false);//uncheck all checkboxes
+      }
       hideSettings(document.getElementById("myLinks"));
       document.getElementById("searchBar").style.display = "none";
   }
