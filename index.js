@@ -165,7 +165,7 @@
               eval(baniTranslation) + "<br/>");
       });
 
-      $("#demo").html($("#demo").html() + header); //add footer
+    //  $("#demo").html($("#demo").html() + header); //add footer
       var element = document.getElementById(location.hash.substr(1)); //find anchor
       if (element != null) {
           element.scrollIntoView(); //scoll to anchor if any
@@ -191,10 +191,10 @@
               console.log(response.pageno);
               var previous = pageID - 1
               var next = parseInt(pageID) + 1;
-              var header = "<p/><a href='?page=" + previous +
+              var header = "<div id='pageheader'><p/><a href='?page=" + previous +
                   "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a>  Page No = " +
                   response.pageno + "  <a href='?page=" + next +
-                  "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/>"
+                  "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/></div>";
               drawContent(header, response.page);
           }
       };
@@ -217,11 +217,11 @@
               console.log(response.shabadinfo.shabadid);
               var previous = shabadID - 1;
               var next = parseInt(shabadID) + 1;
-              var header = "<p/><div id='bani-source'> <b style='margin-left: 40px;'>" + info.source +
+              var header = "<div id='pageheader'><p/><div id='bani-source'> <b style='margin-left: 40px;'>" + info.source +
                   "</b><br/></div><a href='?shabad=" + previous +
                   "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-left'> </span>  </a> " +
                   shabadinfo + "  <a href='?shabad=" + next +
-                  "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/>"
+                  "' class='btn btn-default btn-sm'> <span class='glyphicon glyphicon-circle-arrow-right'></span> </a><br/></div>";
 
               drawContent(header, response.shabad);
           }
@@ -276,7 +276,7 @@
 
   var prevScrollpos = window.pageYOffset;
   window.onscroll = function () {
-       closeNav();
+      // closeNav();
       var currentScrollPos = window.pageYOffset;
       if (prevScrollpos > currentScrollPos) {
           document.getElementById("icon-bar").style.top = "0";
