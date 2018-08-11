@@ -187,9 +187,9 @@ function shareBani() {
     });
 
     if(lineId){
-        location.href.replace(lineId,responseData[firstSelectedLine].line.id);  
+      data +=  location.href.replace(lineId,responseData[firstSelectedLine].line.id);  
     }else{
-    data += window.href+ '&line=' + responseData[firstSelectedLine].line.id;
+    data += location.href+ '&line=' + responseData[firstSelectedLine].line.id;
     }
     window.open('whatsapp://send?text=' + encodeURI(data));
 }
