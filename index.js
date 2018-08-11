@@ -83,14 +83,20 @@ function searchQueryButtonListener() {
     closeNav();
 }
 
-//method caled from UI
-function loadPage(pageID) {
-
+//method caled from UI arrows and query Result
+function loadPage(id) {
+    pageType = loadPageAng;
+    pageID = id;
+    history.pushState(null, null, "index.html?page=" + pageID);
+    loadPageAng();
 }
 
 //method caled from UI
-function loadShabad(shabadID) {
-
+function loadShabad(id) {
+    pageType = loadShabad;
+    shabadID = id;
+    history.pushState(null, null, "index.html?shabad=" + shabadID);
+    loadShabad();
 }
 
 window.addEventListener("popstate", popState);
