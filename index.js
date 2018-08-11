@@ -4,6 +4,7 @@ var query; //shabad query
 var pageType; //whether shabad,query or page
 var shabadID; //shabad being displayed if any
 var pageID; // page being displayed
+var lineId; //lineId to be scrolled to 
 
 var baniLanguage = Cookies.get('baniLanguage');
 if (baniLanguage != "gurmukhi") {
@@ -84,18 +85,28 @@ function searchQueryButtonListener() {
 }
 
 //method caled from UI arrows and query Result
-function loadPage(id) {
+function loadPage(id, line) {
     pageType = loadPageAng;
     pageID = id;
-    history.pushState(null, null, "index.html?page=" + pageID);
+    lineId = line;
+    if (location) {
+        history.pushState(null, null, "index.html?page=" + pageID + "&line" + lineId);
+    } else {
+        history.pushState(null, null, "index.html?page=" + pageID);
+    }
     loadPageAng();
 }
 
 //method caled from UI
-function shabadLinkListener(id) {
+function shabadLinkListener(id, line) {
     pageType = loadShabad;
     shabadID = id;
-    history.pushState(null, null, "index.html?shabad=" + shabadID);
+    lineId = line;
+    if (location) {
+        history.pushState(null, null, "index.html?shabad=" + shabadID + "&line" + lineId);
+    } else {
+        history.pushState(null, null, "index.html?shabad=" + shabadID);
+    }
     loadShabad();
 }
 
@@ -106,6 +117,8 @@ $(window).on("load", popState);
 function popState() {
     pageID = getURLParameter("page");
     query = getURLParameter("query");
+    lineId = getURLParameter("line");
+
     if (query != null) {
         // $("#query").val(query);
         pageType = loadQueryResult;
@@ -152,13 +165,7 @@ function shareBani() {
         info.writer = responseData[firstSelectedLine].line.writer.english;
     }
 
-    var url = window.location.href;
-    if (url.includes('#')) {
-        url = url.slice(0, url.indexOf('#')); //remove # from url
-    }
-    info.link = url + '#' + responseData[firstSelectedLine].line.id;
     var data = info.writer + " page " + info.pageno + " " + info.source;
-
     var baniText = '';
     var baniTranslation = '';
     if (baniLanguage == "gurmukhi") {
@@ -179,7 +186,7 @@ function shareBani() {
         console.log(eval(baniText));
     });
 
-    data += info.link;
+    data += window.location.href + '&line=' + responseData[firstSelectedLine].line.id;
     window.open('whatsapp://send?text=' + encodeURI(data));
 }
 
@@ -206,17 +213,16 @@ function drawContent(header, content, source) {
     });
 
     //  $("#demo").html($("#demo").html() + header); //add footer
-    var element = document.getElementById(location.hash.substr(1)); //find anchor
+    var element = document.getElementById(lineId); //find anchor
     if (element != null) {
         element.scrollIntoView(); //scoll to anchor if any
         element.style.backgroundColor = 'Highlight';
         element.style.color = 'HighlightText';
-    } 
+    }
 }
 
-function getPageLink(id,classname)
-{
-    return '<a href="javascript:void(0);" onclick="loadPage('+ id+ ')"> <i class="'+classname+'" style="font-size:24px"></i> </a>' ; 
+function getPageLink(id, classname) {
+    return '<a href="javascript:void(0);" onclick="loadPage(' + id + ')"> <i class="' + classname + '" style="font-size:24px"></i> </a>';
 }
 
 function loadPageAng() {
@@ -228,7 +234,7 @@ function loadPageAng() {
             console.log(response.pageno);
             var previous = pageID - 1
             var next = parseInt(pageID) + 1;
-            var header = "<div id='pageheader'><p/>"+ getPageLink(previous,"fa fa-arrow-left")+ "Page No = " + response.pageno +  getPageLink(next,"fa fa-arrow-right")+"<br/></div>";
+            var header = "<div id='pageheader'><p/>" + getPageLink(previous, "fa fa-arrow-left") + "Page No = " + response.pageno + getPageLink(next, "fa fa-arrow-right") + "<br/></div>";
             drawContent(header, response.page);
         }
     };
