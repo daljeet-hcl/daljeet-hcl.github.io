@@ -89,8 +89,8 @@ function loadPage(id, line) {
     pageType = loadPageAng;
     pageID = id;
     lineId = line;
-    if (location) {
-        history.pushState(null, null, "index.html?page=" + pageID + "&line" + lineId);
+    if (lineId) {
+        history.pushState(null, null, "index.html?page=" + pageID + "&line=" + lineId);
     } else {
         history.pushState(null, null, "index.html?page=" + pageID);
     }
@@ -102,8 +102,8 @@ function shabadLinkListener(id, line) {
     pageType = loadShabad;
     shabadID = id;
     lineId = line;
-    if (location) {
-        history.pushState(null, null, "index.html?shabad=" + shabadID + "&line" + lineId);
+    if (lineId) {
+        history.pushState(null, null, "index.html?shabad=" + shabadID + "&line=" + lineId);
     } else {
         history.pushState(null, null, "index.html?shabad=" + shabadID);
     }
@@ -186,7 +186,11 @@ function shareBani() {
         console.log(eval(baniText));
     });
 
-    data += window.location.href + '&line=' + responseData[firstSelectedLine].line.id;
+    if(lineId){
+        location.href.replace(lineId,responseData[firstSelectedLine].line.id);  
+    }else{
+    data += window.href+ '&line=' + responseData[firstSelectedLine].line.id;
+    }
     window.open('whatsapp://send?text=' + encodeURI(data));
 }
 
@@ -252,13 +256,11 @@ function loadShabad() {
             info.writer = response.shabadinfo.writer.english;
             info.pageno = response.shabadinfo.pageno;
 
-            var shabadinfo = info.writer + " <b> <a href='index.html?page=" + info.pageno + "'>page " + info.pageno +
-                '</a> ' + '</b>  ';
+            var shabadinfo = info.writer + " <b> <a href='javascript:void(0);'+ onclick='loadPage("+info.pageno+")'>page " + info.pageno +'</a> </b> ';
             console.log(response.shabadinfo.shabadid);
             var previous = shabadID - 1;
             var next = parseInt(shabadID) + 1;
-            var header = "<div id='pageheader'><p/><div id='bani-source'> <b style='margin-left: 40px;'>" + info.source + "</b><br/></div><a href='?shabad=" + previous + "'><i class='fa fa-arrow-left' style='font-size:24px'></i>  </a> " + shabadinfo + "  <a href='?shabad=" + next +
-                "'><i class='fa fa-arrow-right' style='font-size:24px'></i></a><br/></div>";
+            var header = "<div id='pageheader'><p/><div id='bani-source'> <b style='margin-left: 40px;'>" + info.source + "</b><br/></div><a href='javascript:void(0);'  onclick='shabadLinkListener("+previous+")'><i class='fa fa-arrow-left' style='font-size:24px'></i>  </a> " + shabadinfo + "  <a hhref='javascript:void(0);'  onclick='shabadLinkListener("+ next +")'><i class='fa fa-arrow-right' style='font-size:24px'></i></a><br/></div>";
 
             drawContent(header, response.shabad);
         }
