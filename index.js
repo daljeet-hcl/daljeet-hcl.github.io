@@ -60,32 +60,64 @@
   }
 
 
-
+  //method called from UI
   function refresh() {
       $("input:checkbox").prop('checked', false); //uncheck all checkboxes   
   }
 
-  $(window).on("load", function () {
-      pageID = getURLParameter("page");
-      query = getURLParameter("query");
-      if (query != null) {
-         // $("#query").val(query);
-          pageType = loadQueryResult;
-          loadQueryResult();
-      } else {
-          if (pageID != null) {
-           //   $("#page").val(pageID);
-              pageType = loadPageAng;
-              loadPageAng();
-          } else {
-              shabadID = getURLParameter("shabad");
-              if (shabadID != null) {
-                  pageType = loadShabad;
-                  loadShabad();
-              }
-          }
-      }
-  });
+  //method called from UI
+  function loadPageButtonListener(){
+      pageType=loadPageAng;
+      pageID=$("#pageID").val();
+      history.pushState(null,null,"index.html?page="+pageID);
+      loadPageAng();
+      closeNav();
+  }
+
+  //method called from UI
+  function searchQueryButtonListener()
+  {
+
+  }
+  
+  //method caled from UI
+  function loadPage(pageID)
+  {
+
+  }
+
+   //method caled from UI
+  function loadShabad(shabadID)
+  {
+
+  }
+
+  window.addEventListener("popstate", popState);
+  
+  $(window).on("load", popState );
+
+  function popState() {
+        pageID = getURLParameter("page");
+        query = getURLParameter("query");
+        if (query != null) {
+           // $("#query").val(query);
+            pageType = loadQueryResult;
+            loadQueryResult();
+        } else {
+            if (pageID != null) {
+             //   $("#page").val(pageID);
+                pageType = loadPageAng;
+                loadPageAng();
+            } else {
+                shabadID = getURLParameter("shabad");
+                if (shabadID != null) {
+                    pageType = loadShabad;
+                    loadShabad();
+                }
+            }
+        }
+   }
+  
 
   function getURLParameter(sParam) {
       var sPageURL = window.location.search.substring(1);
