@@ -92,7 +92,7 @@ function loadPage(id) {
 }
 
 //method caled from UI
-function loadShabad(id) {
+function shabadLinkListener(id) {
     pageType = loadShabad;
     shabadID = id;
     history.pushState(null, null, "index.html?shabad=" + shabadID);
@@ -211,15 +211,12 @@ function drawContent(header, content, source) {
         element.scrollIntoView(); //scoll to anchor if any
         element.style.backgroundColor = 'Highlight';
         element.style.color = 'HighlightText';
-    } else {
-        //  document.getElementById(content[0].line.id).scrollIntoView(); //scrol into first element
-    }
+    } 
+}
 
-    var checkboxes = $("input[type='checkbox']");
-    //disable whats app button if no checkbox selected
-    checkboxes.click(function () {
-        $('#whatsapp').attr("disabled", !checkboxes.is(":checked"));
-    });
+function getPageLink(id,classname)
+{
+    return '<a href="javascript:void(0);" onclick="loadPage('+ id+ ')"> <i class="'+classname+'" style="font-size:24px"></i> </a>' ; 
 }
 
 function loadPageAng() {
@@ -231,7 +228,7 @@ function loadPageAng() {
             console.log(response.pageno);
             var previous = pageID - 1
             var next = parseInt(pageID) + 1;
-            var header = "<div id='pageheader'><p/><a href='?page=" + previous + "'> <i class='fa fa-arrow-left' style='font-size:24px'></i> </a>  Page No = " + response.pageno + "  <a href='?page=" + next + "'<i class='fa fa-arrow-right' style='font-size:24px'></i> </a><br/></div>";
+            var header = "<div id='pageheader'><p/>"+ getPageLink(previous,"fa fa-arrow-left")+ "Page No = " + response.pageno +  getPageLink(next,"fa fa-arrow-right")+"<br/></div>";
             drawContent(header, response.page);
         }
     };
