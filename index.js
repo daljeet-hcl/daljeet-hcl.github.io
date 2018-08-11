@@ -288,10 +288,7 @@ function loadQueryResult() {
             }
             response.shabads.map((x, index) => {
                 console.log(x);
-                $("#demo").html($("#demo").html() + "<br/> <b> <a href='?shabad=" + x.shabad.shabadid + "#" + x.shabad.id +
-                    "'>" + eval(baniText) + '</a> </b><br/>' + x.shabad.source.english +
-                    "   <b> <a href='?page=" + x.shabad.pageno + "#" + x.shabad.id + "'>" + x.shabad.pageno +
-                    '</a><b>   ' + x.shabad.writer.english + "<br/>");
+                $("#demo").html($("#demo").html() + "<br/> <b> <a href='javascript:void(0);' onclick='shabadLinkListener("+x.shabad.shabadid+','+x.shabad.id+")'>" + eval(baniText) + '</a> </b><br/>' + x.shabad.source.english +"   <b> <a href='javascript:void(0);' onclick='loadPage("+x.shabad.pageno+','+x.shabad.id +")'>" + x.shabad.pageno +'</a><b>   ' + x.shabad.writer.english + "<br/>");
             });
         }
     };
