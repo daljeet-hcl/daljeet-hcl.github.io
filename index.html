@@ -31,6 +31,7 @@
 
   <!-- settings bar -->
   <div id="mySidenav" class="sidenav radio-toolbar">    
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <fieldset>
           <legend>
             <label>Gurubani Text</label>
@@ -62,24 +63,20 @@
 
     <!-- search bar -->
    <div  id="mySidenav2"  class="sidenav form-group radio-toolbar" >
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <legend>
       <label>First letter search</label>
     </legend>      
-        <form action="index.html">
         <input type="text" class="form-control" id="query" name="query" placeholder="गदब / ਗਦਬ for गगन दमामा बाजिओ" /> 
         <br>
-        <button type="submit" class="btn">Search</button>
-      </form>
+        <button onclick="searchQueryButtonListener()" class="btn">Search</button>
       <br>
       <legend>
         <label>Page No</label>
       </legend>
-      <form action="index.html">
-        <input type="number" class="form-control"  name="page" placeholder="1 - 1429">
+        <input type="number" class="form-control"  name="page" id="pageID" placeholder="1 - 1429">
         <br>
-        <button type="submit" class="btn">Load Page</button>
-        <!-- <button type="button" class="btn" id="whatsapp2" onclick="window.open('whatsapp://send?text=' + getData())" disabled> WhatsApp Share </button> -->
-      </form>
+        <button class="btn" onclick="loadPageButtonListener()">Load Page</button>    
   </div>
 
     <!-- Top Navigation Menu -->
@@ -91,7 +88,7 @@
       <a href="javascript:void(0);" onclick="showSearchBar()">
         <i class="fa fa-search"></i>
       </a>
-      <a href="javascript:void(0);" id="whatsapp" onclick="shareBani()" disabled>
+      <a href="javascript:void(0);" id="whatsapp" onclick="shareBani()">
         <i class="fa fa-whatsapp"></i>
       </a>
       <a href="javascript:void(0);" onclick="refresh()">
