@@ -216,7 +216,7 @@ function drawContent(header, content, source) {
             eval(baniTranslation) + "<br/>");
     });
 
-    //  $("#demo").html($("#demo").html() + header); //add footer
+    $("#demo").html($("#demo").html() + header); //add footer
     var element = document.getElementById(lineId); //find anchor
     if (element != null) {
         element.scrollIntoView(); //scoll to anchor if any
